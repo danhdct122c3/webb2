@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../../HKII_2/web/web2"
+		},
+		{
+			"path": "C:/Users/Admin/OneDrive/Máy tính/web/bootstrap-shop-template"
+		},
+		{
+			"path": "../../TruyenNhanDL"
+		},
+		{
+			"path": "../../Shopquanao-master"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "bootstrap-shop-template"
+	}
+}
