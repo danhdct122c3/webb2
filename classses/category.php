@@ -88,6 +88,19 @@
             $result = $this->db->select($query);
             return $result;
         }
-        /* Show list product by brand */
+        /* Show product by category */
+
+        public function getProductsByCategory($categoryName)
+        {
+            // Escaping và chuẩn hóa tên phân loại
+            $categoryName = $this->db->link->real_escape_string($categoryName);
+
+            // Câu truy vấn SQL để lấy các sản phẩm thuộc vào một phân loại cụ thể
+            $query = "SELECT * FROM products WHERE category = '$categoryName'";
+
+           $result=$this->db->select($query);
+            return $result;
+        }
+
     }
 ?>

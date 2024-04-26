@@ -99,6 +99,23 @@ class product
         $result = $this->db->select($query);
         return $result;
     }
+    public function getproductbyCategory($id)
+    {
+        $sp_tungtrang = 8;
+        if(!isset($_GET['trang'])){
+            $trang = 1;
+        }else{
+            $trang = $_GET['trang'];
+        }
+
+        $product_start = ($trang-1)*$sp_tungtrang;
+
+        $query = "SELECT pd.* 
+        FROM tbl_product AS pd
+        WHERE pd.catId  = '$id'  LIMIT $product_start,$sp_tungtrang";
+        $result = $this->db->select($query);
+        return $result;
+    } 
     public function getproductbyTypeProductId($id,$type)
     {
         $sp_tungtrang = 8;
@@ -429,7 +446,38 @@ class product
         $result = $this->db->select($sql);
         return $result;
     }
+    public function getProductsByIdCategory_number_page($categoryName)
+    {
+        // Escaping và chuẩn hóa tên loại áo
+        $categoryName = $this->db->link->real_escape_string($categoryName);
 
+        // Câu truy vấn SQL để lấy các sản phẩm thuộc vào một loại áo cụ thể
+        $query = "SELECT * FROM tbl_product WHERE catId = '$categoryName'";
+        
+        // Thực hiện truy vấn và trả về kết quả
+        return $this->db->select($query);
+    }
+    public function countProductsByCategory($categoryId) {
+        // Escape $categoryId để tránh SQL injection
+        $categoryId = $this->db->link->real_escape_string($categoryId);
+        
+        // Truy vấn SQL để đếm số lượng sản phẩm trong danh mục có catId là $categoryId
+        $sql = "SELECT COUNT(*) AS count FROM tbl_product WHERE catId =  '$categoryId'";
+        
+        // Thực hiện truy vấn
+        $result = $this->db->select($sql);
+        
+        // Kiểm tra xem có kết quả hay không
+        if ($result) {
+            // Lấy số lượng sản phẩm từ kết quả truy vấn
+            $count = $result->fetch_assoc()['count'];
+            return $count;
+        } else {
+            // Trả về 0 nếu không có kết quả
+            return 0;
+        }
+    }
+    
     //Tìm kiếm nâng cao
     public function number_page($category,$brand,$price,$search)
     {

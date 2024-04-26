@@ -63,7 +63,7 @@ if (isset($_GET['status']) && $_GET['status'] == 2) {
                                 </li>
                                 <li class="category">
                                     <span class="ti-user"></span>
-                                    <a href=""> Thông tin tài khoản</a>
+                                    <a href="account.php"> Thông tin tài khoản</a>
                                 </li>
                                 <!-- <li class="category">
                                     <span class="ti-comments"></span>
@@ -75,7 +75,7 @@ if (isset($_GET['status']) && $_GET['status'] == 2) {
                                 </li> -->
                                 <li class="category">
                                     <span class="ti-printer"></span>
-                                    <a href="lichsu.php"> Quản lý đơn hàng</a>
+                                    <a href="#"> Quản lý đơn hàng</a>
                                 </li>
                                 <li class="category">
                                     <span class="ti-location-pin"></span>

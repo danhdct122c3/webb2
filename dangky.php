@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                                 <span>Ngày sinh</span>
                                                 <span style="color: red;">*</span>
                                             </div>
-                                            <input type="text" name="date" class="auth__form-input" placeholder="Nhập ngày sinh">
+                                            <input type="date" name="date" class="auth__form-input" placeholder="Nhập ngày sinh">
                                         </div>
                                     </div>
                                     <div class="row">

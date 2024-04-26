@@ -11,7 +11,8 @@
             <nav class="navigation">
                 <ul class="nav">
                     <li class="nav-list">
-                        <a href="#">NAM</a>
+                        <!-- <a href="#">NAM</a> -->
+                        <a href="timkiemnangcao.php">SẢN PHẨM</a>
                         <div class="header_menu-list-in-item">
                             <div class="header_menu-list">
                                 <div class="row">   
@@ -38,8 +39,10 @@
                                     <div class="col c-7">
                                         <div class="row header_menu-list-part">
                                             <ul>
+                                             
                                                 <li>
-                                                    <h6>Áo</h6>
+                                                    
+                                                    <a href="listProduct.php?catId=40"><h6>Áo</h6></a>
                                                     <ul class="row header_menu-list-brand ">                                              
                                                         <?php
                                                             $tpd = new typeProduct();
@@ -55,13 +58,23 @@
                                                             }
                                                         ?>
                                                     </ul>
+                                                    <!-- <ul class="row header_menu-list-brand ">                                              
+                                                      
+                                                        <li class="col c-12">
+                                                            
+                                                            <a href="listProduct.php?catId=40">Áo</a>
+                                                        </li>
+                                                         
+                                                    </ul> -->
                                                 </li>
                                                 <li>
-                                                    <h6>Áo khoác</h6>
+                                                    <!-- <h6>Áo khoác</h6> -->
+                                                    <a href="listProduct.php?catId=41"><h6>Áo Khoác</h6></a>
                                                     <ul class="row header_menu-list-brand ">                                              
                                                         <?php
                                                             $tpd = new typeProduct();
                                                             $get_tpd = $tpd->show_type_product_aokhoac();
+                                                            // $get_tpd = $tpd->show_type_product_aokhoac();
                                                             if ($get_tpd) {
                                                                 while ($result = $get_tpd->fetch_assoc()) {
                                                         ?>
@@ -75,7 +88,8 @@
                                                     </ul>
                                                 </li>
                                                 <li>
-                                                    <h6>QUẦN & JUMPSUIT</h6>
+                                                    <!-- <h6>QUẦN & JUMPSUIT</h6> -->
+                                                    <a href="listProduct.php?catId=42"><h6>QUẦN & JUMPSUIT</h6></a>
                                                     <ul class="row header_menu-list-brand ">                                              
                                                         <?php
                                                             $tpd = new typeProduct();
@@ -93,7 +107,8 @@
                                                     </ul>
                                                 </li>
                                                 <li>
-                                                    <h6>CHÂN VÁY</h6>
+                                                    <!-- <h6>CHÂN VÁY</h6> -->
+                                                    <a href="listProduct.php?catId=43"><h6>CHÂN VÁY</h6></a>
                                                     <ul class="row header_menu-list-brand ">                                              
                                                         <?php
                                                             $tpd = new typeProduct();
@@ -111,7 +126,8 @@
                                                     </ul>
                                                 </li>
                                                 <li>
-                                                    <h6>ĐẦM</h6>
+                                                    <!-- <h6>ĐẦM</h6> -->
+                                                    <a href="listProduct.php?catId=44"><h6>ĐẦM</h6></a>
                                                     <ul class="row header_menu-list-brand ">                                              
                                                         <?php
                                                             $tpd = new typeProduct();
@@ -129,7 +145,7 @@
                                                     </ul>
                                                 </li>
                                                 <li>
-                                                    <h6>ĐỒ LÓT</h6>
+                                                    <!-- <h6>ĐỒ LÓT</h6> -->
                                                     <ul class="row header_menu-list-brand ">                                              
                                                         <?php
                                                             $tpd = new typeProduct();
@@ -152,297 +168,7 @@
                                 </div>   
                             </div>
                         </div>
-                    </li>
-                    <li class="nav-list">
-                        <a href="#">NỮ</a>
-                        <div class="header_menu-list-in-item">
-                            <div class="header_menu-list">
-                                <div class="row">   
-                                    <div class="col c-5">
-                                        <div class="header_menu-list-part">
-                                            <h6>Thương hiệu</h6>
-                                            <ul class="row header_menu-list-brand ">
-                                                <?php
-                                                    $brand = new brand();
-                                                    $get_brand = $brand->show_brand();
-                                                    if ($get_brand) {
-                                                        while ($result = $get_brand->fetch_assoc()) {
-                                                ?>
-                                                <li class="col c-4">
-                                                    <a href="listProduct.php?idBrand=<?php echo $result['brandId'] ?>&type=1"><?php echo $result['brandName'] ?></a>
-                                                </li>
-                                                    <?php
-                                                        }
-                                                    }
-                                                ?>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col c-7">
-                                        <div class="row header_menu-list-part">
-                                            <ul>
-                                                <li>
-                                                    <h6>Áo</h6>
-                                                    <ul class="row header_menu-list-brand ">                                              
-                                                        <?php
-                                                            $tpd = new typeProduct();
-                                                            $get_tpd = $tpd->show_type_product_ao();
-                                                            if ($get_tpd) {
-                                                                while ($result = $get_tpd->fetch_assoc()) {
-                                                        ?>
-                                                        <li class="col c-12">
-                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>&type=1"><?php echo $result['typeProductName']; ?></a>
-                                                        </li>
-                                                            <?php
-                                                                }
-                                                            }
-                                                        ?>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <h6>Áo khoác</h6>
-                                                    <ul class="row header_menu-list-brand ">                                              
-                                                        <?php
-                                                            $tpd = new typeProduct();
-                                                            $get_tpd = $tpd->show_type_product_aokhoac();
-                                                            if ($get_tpd) {
-                                                                while ($result = $get_tpd->fetch_assoc()) {
-                                                        ?>
-                                                        <li class="col c-12">
-                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>&type=1"><?php echo $result['typeProductName'] ?></a>
-                                                        </li>
-                                                            <?php
-                                                                }
-                                                            }
-                                                        ?>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <h6>QUẦN & JUMPSUIT</h6>
-                                                    <ul class="row header_menu-list-brand ">                                              
-                                                        <?php
-                                                            $tpd = new typeProduct();
-                                                            $get_tpd = $tpd->show_type_product_quan();
-                                                            if ($get_tpd) {
-                                                                while ($result = $get_tpd->fetch_assoc()) {
-                                                        ?>
-                                                        <li class="col c-12">
-                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>&type=1"><?php echo $result['typeProductName'] ?></a>
-                                                        </li>
-                                                            <?php
-                                                                }
-                                                            }
-                                                        ?>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <h6>CHÂN VÁY</h6>
-                                                    <ul class="row header_menu-list-brand ">                                              
-                                                        <?php
-                                                            $tpd = new typeProduct();
-                                                            $get_tpd = $tpd->show_type_product_chanvay();
-                                                            if ($get_tpd) {
-                                                                while ($result = $get_tpd->fetch_assoc()) {
-                                                        ?>
-                                                        <li class="col c-12">
-                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>&type=1"><?php echo $result['typeProductName'] ?></a>
-                                                        </li>
-                                                            <?php
-                                                                }
-                                                            }
-                                                        ?>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <h6>ĐẦM</h6>
-                                                    <ul class="row header_menu-list-brand ">                                              
-                                                        <?php
-                                                            $tpd = new typeProduct();
-                                                            $get_tpd = $tpd->show_type_product_dam();
-                                                            if ($get_tpd) {
-                                                                while ($result = $get_tpd->fetch_assoc()) {
-                                                        ?>
-                                                        <li class="col c-12">
-                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>&type=1"><?php echo $result['typeProductName'] ?></a>
-                                                        </li>
-                                                            <?php
-                                                                }
-                                                            }
-                                                        ?>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <h6>ĐỒ LÓT</h6>
-                                                    <ul class="row header_menu-list-brand ">                                              
-                                                        <?php
-                                                            $tpd = new typeProduct();
-                                                            $get_tpd = $tpd->show_type_product_DOLOT();
-                                                            if ($get_tpd) {
-                                                                while ($result = $get_tpd->fetch_assoc()) {
-                                                        ?>
-                                                        <li class="col c-12">
-                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>&type=1"><?php echo $result['typeProductName'] ?></a>
-                                                        </li>
-                                                            <?php
-                                                                }
-                                                            }
-                                                        ?>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>   
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav-list">
-                        <a href="#">TRẺ EM</a>
-                        <div class="header_menu-list-in-item">
-                            <div class="header_menu-list">
-                                <div class="row">   
-                                    <div class="col c-5">
-                                        <div class="header_menu-list-part">
-                                            <h6>Thương hiệu</h6>
-                                            <ul class="row header_menu-list-brand ">
-                                                <?php
-                                                    $brand = new brand();
-                                                    $get_brand = $brand->show_brand();
-                                                    if ($get_brand) {
-                                                        while ($result = $get_brand->fetch_assoc()) {
-                                                ?>
-                                                <li class="col c-4">
-                                                    <a href="listProduct.php?idBrand=<?php echo $result['brandId'] ?>&type=2"><?php echo $result['brandName'] ?></a>
-                                                </li>
-                                                    <?php
-                                                        }
-                                                    }
-                                                ?>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col c-7">
-                                        <div class="row header_menu-list-part">
-                                            <ul>
-                                                <li>
-                                                    <h6>Áo</h6>
-                                                    <ul class="row header_menu-list-brand ">                                              
-                                                        <?php
-                                                            $tpd = new typeProduct();
-                                                            $get_tpd = $tpd->show_type_product_ao();
-                                                            if ($get_tpd) {
-                                                                while ($result = $get_tpd->fetch_assoc()) {
-                                                        ?>
-                                                        <li class="col c-12">
-                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>&type=2"><?php echo $result['typeProductName']; ?></a>
-                                                        </li>
-                                                            <?php
-                                                                }
-                                                            }
-                                                        ?>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <h6>Áo khoác</h6>
-                                                    <ul class="row header_menu-list-brand ">                                              
-                                                        <?php
-                                                            $tpd = new typeProduct();
-                                                            $get_tpd = $tpd->show_type_product_aokhoac();
-                                                            if ($get_tpd) {
-                                                                while ($result = $get_tpd->fetch_assoc()) {
-                                                        ?>
-                                                        <li class="col c-12">
-                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>&type=2"><?php echo $result['typeProductName'] ?></a>
-                                                        </li>
-                                                            <?php
-                                                                }
-                                                            }
-                                                        ?>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <h6>QUẦN & JUMPSUIT</h6>
-                                                    <ul class="row header_menu-list-brand ">                                              
-                                                        <?php
-                                                            $tpd = new typeProduct();
-                                                            $get_tpd = $tpd->show_type_product_quan();
-                                                            if ($get_tpd) {
-                                                                while ($result = $get_tpd->fetch_assoc()) {
-                                                        ?>
-                                                        <li class="col c-12">
-                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>&type=2"><?php echo $result['typeProductName'] ?></a>
-                                                        </li>
-                                                            <?php
-                                                                }
-                                                            }
-                                                        ?>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <h6>CHÂN VÁY</h6>
-                                                    <ul class="row header_menu-list-brand ">                                              
-                                                        <?php
-                                                            $tpd = new typeProduct();
-                                                            $get_tpd = $tpd->show_type_product_chanvay();
-                                                            if ($get_tpd) {
-                                                                while ($result = $get_tpd->fetch_assoc()) {
-                                                        ?>
-                                                        <li class="col c-12">
-                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>&type=2"><?php echo $result['typeProductName'] ?></a>
-                                                        </li>
-                                                            <?php
-                                                                }
-                                                            }
-                                                        ?>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <h6>ĐẦM</h6>
-                                                    <ul class="row header_menu-list-brand ">                                              
-                                                        <?php
-                                                            $tpd = new typeProduct();
-                                                            $get_tpd = $tpd->show_type_product_dam();
-                                                            if ($get_tpd) {
-                                                                while ($result = $get_tpd->fetch_assoc()) {
-                                                        ?>
-                                                        <li class="col c-12">
-                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>&type=2"><?php echo $result['typeProductName'] ?></a>
-                                                        </li>
-                                                            <?php
-                                                                }
-                                                            }
-                                                        ?>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <h6>ĐỒ LÓT</h6>
-                                                    <ul class="row header_menu-list-brand ">                                              
-                                                        <?php
-                                                            $tpd = new typeProduct();
-                                                            $get_tpd = $tpd->show_type_product_DOLOT();
-                                                            if ($get_tpd) {
-                                                                while ($result = $get_tpd->fetch_assoc()) {
-                                                        ?>
-                                                        <li class="col c-12">
-                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>&type=2"><?php echo $result['typeProductName'] ?></a>
-                                                        </li>
-                                                            <?php
-                                                                }
-                                                            }
-                                                        ?>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>   
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav-list">
-                        <a href="timkiemnangcao.php">SẢN PHẨM</a>
-                    </li>
-                    
+                    </li>    
                 </ul>
              </nav>
         </div>
