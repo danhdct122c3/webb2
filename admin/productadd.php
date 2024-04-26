@@ -20,6 +20,7 @@
         $insertProduct = $product->insert_product($_POST,$_FILES);
     }
 ?>
+
 <body>
     <?php include './inc/sidebar.php' ?>
     <div class="main-content">
@@ -134,14 +135,23 @@
                     </td>
                 </tr>
             
-                <tr>
+                <!-- <tr>
                     <td class="form_title">
                         <label>Tải ảnh lên</label>
                     </td>
                     <td>
                         <input type="file" name="image" />
                     </td>
-                </tr>
+                </tr> -->
+                <tr>
+            <td class="form_title">
+                <label>Tải ảnh lên</label>
+            </td>
+            <td>
+                <input type="file" name="image" onchange="previewImage(event)" />
+                <img id="preview" src="#" alt="Hình ảnh sản phẩm" style="max-width: 200px; max-height: 200px;">
+            </td>
+        </tr>
 				<tr>
                     <td class="form_title">
                         <label>Kiểu sản phẩm</label>
@@ -169,5 +179,15 @@
             </section>
         </main>
     </div>
+    <script>
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('preview');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
 </body>
 </html>
