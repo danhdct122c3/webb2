@@ -140,7 +140,7 @@ body {
 }
 
 /* .nav-list:hover .header_menu-list-in-item { */
-    .nav-list .header_menu-list-in-item {
+    .nav-list:hover .header_menu-list-in-item {
     display: block;
 }
 
