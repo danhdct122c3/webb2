@@ -231,7 +231,8 @@ if (!isset($_GET['id'])) {
 										<span class="sum-product">Thành tiền</span>
 										<span class="sum-product" style="font-weight: 800;">
 											<?php
-											$grand_Total = $subTotal - $vat;
+											$grand_Total = $subTotal;
+											// $grand_Total = $subTotal - $vat;
 											echo number_format($grand_Total, 0, ',', '.') . "" . "đ"
 											?>
 										</span>

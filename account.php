@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save'])) {
                                 border-bottom: 1px solid #ccc;">
                                     <span class="ti-user" style="padding: 10px;border: 1px solid;border-radius: 50%;"></span>
                                     <a href="" style="text-decoration: none;padding: 0 10px;font-family: var(--font-family-monospace); color: black;
-                                font-weight: bold"> Quỳnh Linh</a>
+                                font-weight: bold"></a>
                                 </li>
                                 <li class="category">
                                     <span class="ti-user"></span>
@@ -104,23 +104,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save'])) {
                                             <div class="information">
                                                 <div class="information-name">
                                                     <label>Họ & Tên</label>
-                                                    <input type="text" name="name" value="<?php echo $result_infor_user['name'] ?>">
+                                                    <input type="text" name="name" value="<?php echo $result_infor_user['name'] ?> " disabled>
                                                 </div>
                                                 <div class="information-name">
                                                     <label>Số điện thoại</label>
-                                                    <input type="text" name="phone" value="<?php echo $result_infor_user['sdt'] ?>">
+                                                    <input type="text" name="phone" value="<?php echo $result_infor_user['sdt'] ?>" disabled>
                                                 </div>
                                                 <div class="information-name">
                                                     <label>Email</label>
-                                                    <input type="text" name="email" value="<?php echo $result_infor_user['email'] ?>">
+                                                    <input type="none" name="email" value="<?php echo $result_infor_user['email'] ?>" disabled>
                                                 </div>
                                                 <div class="information-name">
                                                     <label>Ngày sinh</label>
-                                                    <input type="text" name="date" value="<?php echo $result_infor_user['ngaySinh'] ?>">
+                                                    <input type="date" name="date" value="<?php echo $result_infor_user['ngaySinh'] ?>" disabled>
+                                                </div>
+                                                <div class="information-name">
+                                                    <label>Tỉnh/Thành Phố</label>
+                                                    <input type="text" name="city" value="<?php echo $result_infor_user['city'] ?>" disabled>
+                                                    
+                                                </div>
+                                                <div class="information-name">
+                                                    <label>Quận/Huyện</label>
+                                                    <input type="text" name="district" value="<?php echo $result_infor_user['district'] ?>" disabled>
+                                                </div>
+                                                <div class="information-name">
+                                                    <label>Phường/Xã</label>
+                                                    <input type="text" name="ward" value="<?php echo $result_infor_user['ward'] ?>" disabled>
                                                 </div>
                                                 <div class="information-name">
                                                     <label>Địa chỉ</label>
-                                                    <input type="text" name="address" value="<?php echo $result_infor_user['diaChi'] ?>">
+                                                    <input type="text" name="address" value="<?php echo $result_infor_user['diaChi'] ?>" disabled>
                                                 </div>
                                                 <div class="information-sex">
                                                     <label>Giới tính</label>
@@ -146,9 +159,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save'])) {
                                                     ?>
                                                 </div>
 
-                                                <div class="infotmation-save">
+                                                <!-- <div class="infotmation-save">
                                                     <input type="submit" name="save" value="Lưu thay đổi">
-                                                </div>
+                                                </div> -->
 
 
                                             <?php } ?>
@@ -163,11 +176,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save'])) {
                                         </div> -->
                                 </div>
                             </div>
-                            <div class="col l-5">
+                            <!-- <div class="col l-5">
                                 <div class="form-upload__img">
                                     <input type="file" name="user_name">
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

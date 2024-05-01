@@ -75,7 +75,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                             </div>
                                             <input type="date" name="date" class="auth__form-input" placeholder="Nhập ngày sinh">
                                         </div>
+                                        <div class="auth__form-group col c-6">
+                                            <span class="auth__form-group-title">
+                                                <span>Thành Phố</span>
+                                                <span style="color: red;">*</span>
+                                            </span>
+                                            <input type="text" name="city" class="auth__form-input" placeholder="Nhập Tỉnh/Thành Phố">
+                                        </div>
+
+                                        
+                                        <div class="auth__form-group col c-6">
+                                            <span class="auth__form-group-title">
+                                                <span>Quận/Huyện </span>
+                                                <span style="color: red;">*</span>
+                                            </span>
+                                            <input type="text" name="district" class="auth__form-input" placeholder="Nhập Quận/Huyện">
+                                           
+                                        </div>
+                                        <div class="auth__form-group col c-6">
+                                            <span class="auth__form-group-title">
+                                                <span>Phường/Xã</span>
+                                                <span style="color: red;">*</span>
+                                            </span>
+                                            <input type="text" name="ward" class="auth__form-input" placeholder="Nhập Phường/Xã">
+                                            
+                                        </div>
                                     </div>
+
+
+
+                                  
                                     <div class="row">
                                         <div class="auth__form-group col c-12">
                                             <div class="auth__form-group-title">
@@ -133,7 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                             </div>
                             <input type="submit" name="submit" value="Đăng ký" class="btn btn-login mt-16">
                             <div style="text-align: right ; padding: 15px 0;">
-                                <a href="login.php" style="color: #221f20;font-family: var(--font-family-sans-serif);margin: 24px;">Đăng nhập</a>
+                                <a href="login.php" style="color: #221f20; font-size:1.5rem; font-family: var(--font-family-sans-serif);margin: 24px;text-decoration:underline; ">Đăng nhập</a>
                             </div>
 
                         </div>

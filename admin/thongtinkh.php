@@ -34,6 +34,9 @@ if (isset($_GET['delid'])) {
                                         <th>Mã KH</th>
                                         <th>Tên khách hàng</th>
                                         <th>SĐT</th>
+                                        <th>Thành Phố</th>
+                                        <th>Quận</th>
+                                        <th>Phường</th>
                                         <th>Địa chỉ</th>
                                         <th>Ngày sinh</th>
                                         <th>Giới tính</th>
@@ -51,6 +54,9 @@ if (isset($_GET['delid'])) {
                                             <td><?php echo $result['userId'] ?></td>
                                             <td><?php echo $result['name'] ?></td>
                                             <td><?php echo $result['sdt'] ?></td>
+                                            <td><?php echo $result['city'] ?></td>
+                                            <td><?php echo $result['district'] ?></td>
+                                            <td><?php echo $result['ward'] ?></td>
                                             <td><?php echo $result['diaChi'] ?></td>
                                             <td><?php echo $result['ngaySinh'] ?></td>
                                             <td><?php echo $result['gioiTinh'] ?></td>

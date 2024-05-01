@@ -15,13 +15,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giỏ hàng</title>
 </head>
+
 <?php
-if (isset($_GET['orderid']) && $_GET['orderid'] == 'order') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if(isset($_POST['orderid']) && $_POST['orderid'] === 'order') {
     date_default_timezone_set("Asia/Ho_Chi_Minh");
     $date=date('Y-m-d H:i:s');
-    $inserOder = $order->insertOder(Session::get('user_id'),$date);
+    $city=$_POST['city'];
+    $district=$_POST['district'];
+    $ward=$_POST['ward'];
+    $address=$_POST['address'];
+    $payment_method = $_POST['payment_method'];
+    $inserOder = $order->insertOder(Session::get('user_id'),$date,$payment_method,$city,$district,$ward,$address);
     $delCart = $cat->del_Cart(Session::get('user_id'));
     header('Location:donhang.php');
+    // var_dump($_POST);
+    } else {
+        echo "Form chưa được submit.";
+    }
 }
 ?>
 <body>
@@ -127,40 +138,62 @@ if (isset($_GET['orderid']) && $_GET['orderid'] == 'order') {
                                     </div>
 
                                 </div>
+                                
                                 <div class="col l-12" style="margin: 20px 0;">
                                     <h3 style="padding: 10px;font-family: var(--font-family-sans-serif);">Địa chỉ giao hàng</h3>
-                                    <div style="border: 1px solid #e7e8e9;border-radius: 32px 0px 0px;">
-                                        <?php
+                                    <div style="border:none; border-radius: 32px 0px 0px;">
+                                    <?php
                                         $userId = Session::get('user_id');
                                         $infor_user = $user->show_User($userId);
                                         while ($result_infor_user = $infor_user->fetch_assoc()) {
                                         ?>
-                                            <table>
+                                     
+                                          <table>
                                                 <tbody>
                                                     <tr style="line-height:50px;">
-                                                        <td>Tên: </td>
-                                                        <td><?php echo $result_infor_user['name'] ?></td>
+                                                        <td>Thành Phố: </td>
+                                                        <td >
+                                                           <input type="text" name="city" value="<?php echo $result_infor_user['city'] ?>"> 
+                                                          
+                                                        </td>
                                                     </tr>
                                                     <tr style="line-height:50px;">
-                                                        <td>Email: </td>
-                                                        <td><?php echo $result_infor_user['email'] ?></td>
+                                                        <td>Quận/Huyện </td>
+                                                        <td >
+                                                        <input type="text" name="district" value="<?php echo $result_infor_user['district'] ?>">
+                                                        
+                                                        </td>
                                                     </tr>
                                                     <tr style="line-height:50px;">
-                                                        <td>SĐT: </td>
-                                                        <td><?php echo $result_infor_user['sdt'] ?></td>
+                                                        <td>Phường/Xã</td>
+                                                        <td>
+                                                        <input type="text" name="ward" value="<?php echo $result_infor_user['ward'] ?>"> 
+                                                       
+                                                        </td>
                                                     </tr>
                                                     <tr style="line-height:50px;">
-                                                        <td>Address: </td>
-                                                        <td><?php echo $result_infor_user['diaChi'] ?></td>
+                                                        <td>Địa Chỉ: </td>
+                                                        <td >
+                                                            <!-- <input type="text" name="address" value="đã nhận dữ liệu"> -->
+                                                            <input type="text"name="address"  value="<?php echo $result_infor_user['diaChi'] ?>">
+                                                            
+                                                           
+                                                        </td>
                                                     </tr>
                                                     <tr style="line-height:50px;">
-                                                        <td colspan="2" style="cursor:pointer;"><a href="account.php" style="text-decoration:none;color:black; ">Chỉnh sửa thông tin</a></td>
+                                                        <td  style="cursor:pointer;" colspan="3">
+                                                        
+                                                       <span class="cart-purchase-button"  ><button type="button" id="updateAddressBtn">Cập nhật địa chỉ giao hàng</button>
+                                                        </td>
                                                     </tr>
+                                                </tbody>
                                                 </tbody>
                                             <?php
                                         }
                                             ?>
                                             </table>
+                                            
+                                         
                                     </div>
 
                                 </div>
@@ -188,7 +221,7 @@ if (isset($_GET['orderid']) && $_GET['orderid'] == 'order') {
 										</div>
 										<span class="sum-product"><?php echo number_format($subTotal, 0, ',', '.') . "" . "đ" ?></span>
 									</div>
-									<div style="display: flex;justify-content: space-between; margin: 20px 0;">
+									<!-- <div style="display: flex;justify-content: space-between; margin: 20px 0;">
 										<span class="sum-product">Tiền thuế(VAT 10%)</span>
 										<span class="sum-product">
 											<?php
@@ -196,19 +229,31 @@ if (isset($_GET['orderid']) && $_GET['orderid'] == 'order') {
 											echo number_format($vat, 0, ',', '.') . "" . "đ";
 											?>
 										</span>
-									</div>
+									</div> -->
 									<div class="cart-purchase">
 										<span class="sum-product">Thành tiền</span>
 										<span class="sum-product" style="font-weight: 800;">
 											<?php
-											$grand_Total = $subTotal - $vat;
+											$grand_Total = $subTotal;
+											// $grand_Total = $subTotal - $vat;
 											echo number_format($grand_Total, 0, ',', '.') . "" . "đ"
 											?>
 										</span>
 									</div>
+                                    <div class="payment" style="display: flex;justify-content: space-between; margin: 20px 0;">
+                                    <div class="voucher-title">
+											<span>Hình thức thanh toán</span> 
+										</div>
+                                        <select name="payment_method" id="">
+                                            <option value=1 selected>Thanh toán khi nhận hàng</option>
+                                            <option value=2 >Chuyển khoản</option>
+                                            
+                                        </select>
+                                       
+                                    </div>
 									<div class="cart-purchase-button">
-                                    <p class="btn"><a href="?orderid=order" id="btn_order" onclick="return alert('Bạn đã đặt hàng thành công')">Xác nhận đặt hàng</a></p>
-									</div>
+                                    <button type="submit" name="submit" id="btn_order" onclick="return alert('Bạn đã đặt hàng thành công')">Xác nhận đặt hàng</button>
+                                    </div>
 								<?php
 								} else {
 								}
@@ -218,13 +263,18 @@ if (isset($_GET['orderid']) && $_GET['orderid'] == 'order') {
                         </div>
                     </div>
                 </div>
+                
             </div>
-            
+            <input type="hidden" name="orderid" value="order">
 
         </form>
         <?php include './inc/footer.php' ?>
     </div>
-
+    <script>
+        document.getElementById('updateAddressBtn').addEventListener('click', function() {
+            alert('Cập nhật địa chỉ thành công');
+        });
+    </script>                           
 </body>
 
 </html>

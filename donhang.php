@@ -153,7 +153,7 @@ if (isset($_GET['status']) && $_GET['status'] == 2) {
                                                     <th>Giá</th>
                                                     <th>Số lượng</th>
                                                     <th>Thành tiền</th>
-                                                    <th>Địa chỉ</th>
+                                                    <th>Ngày đặt</th>
                                                     <th>Tình trạng</th>
                                                 </tr>
                                             </thead>
@@ -261,7 +261,7 @@ if (isset($_GET['status']) && $_GET['status'] == 2) {
                                                         <th>Giá</th>
                                                         <th>Số lượng</th>
                                                         <th>Thành tiền</th>
-                                                        <th>Địa chỉ</th>
+                                                        <th>ngày đặt</th>
                                                         <th>Tình trạng</th>
                                                     </tr>
                                                 </thead>
@@ -371,7 +371,7 @@ if (isset($_GET['status']) && $_GET['status'] == 2) {
                                                             <th>Giá</th>
                                                             <th>Số lượng</th>
                                                             <th>Thành tiền</th>
-                                                            <th>Địa chỉ</th>
+                                                            <th>Ngày đặt</th>
                                                             <th>Tình trạng</th>
                                                         </tr>
                                                     </thead>
@@ -483,7 +483,7 @@ if (isset($_GET['status']) && $_GET['status'] == 2) {
                                                                 <th>Giá</th>
                                                                 <th>Số lượng</th>
                                                                 <th>Thành tiền</th>
-                                                                <th>Địa chỉ</th>
+                                                                <th>Ngày đặt</th>
                                                                 <th>Tình trạng</th>
                                                             </tr>
                                                         </thead>

@@ -15,26 +15,78 @@
             $this->fm = new Format();
         }
         /*chèn data vào bảng tbl_order*/
-        public function insertOder($userId,$date){
-			$sId = session_id();
-			$query = "SELECT * FROM tbl_cart WHERE sessionId = '$sId' AND userId='$userId'";
-			$getProduct = $this->db->select($query);
-			if($getProduct){
-                while($result= $getProduct->fetch_assoc()){
+        public function insertOder($userId, $date, $payment_method,$city,$district,$ward,$address)
+        {
+            $sId = session_id();
+            $query = "SELECT * FROM tbl_cart WHERE sessionId = '$sId' AND userId='$userId'";
+            $getProduct = $this->db->select($query);
+            if ($getProduct) {
+                while ($result = $getProduct->fetch_assoc()) {
                     $productId = $result['productId'];
-                    $size=$result['size'];
+                    $size = $result['size'];
                     $price = $result['price'];
                     $image = $result['image'];
                     $quantity = $result['quantity'];
-                    $thanhtien= $result['quantity'] * $result['price'];
+                    $thanhtien = $result['quantity'] * $result['price'];
                     $order_time = $date;
-                    $query_order= "INSERT INTO tbl_order(productId,size,price,image,quantity,thanhtien,userId, status,order_time,recieve_time) VALUES('$productId',
-                    '$size','$price','$image','$quantity','$thanhtien','$userId','0','$order_time','0')";
-                    $insert_order=$this->db->insert($query_order);
-                    
+                    $query_order = "INSERT INTO tbl_order(productId,size,price,image,quantity,thanhtien,userId, status,order_time,recieve_time,payment,city,ward,district,address) VALUES('$productId',
+                        '$size','$price','$image','$quantity','$thanhtien','$userId','0','$order_time','0','$payment_method','$city','$district','$ward','$address')";
+                     $insert_order = $this->db->insert($query_order);
                 }
+                return $insert_order;
+              
             }
-		}
+        }
+//         public function insertOder($userId, $date, $payment_method)
+// {
+//     $sId = session_id();
+//     $query = "SELECT * FROM tbl_cart WHERE sessionId = '$sId' AND userId='$userId'";
+//     $getProduct = $this->db->select($query);
+    
+//     if ($getProduct && $getProduct->num_rows > 0) {
+//         // Tạo một mảng để lưu trữ thông tin về các sản phẩm
+//         $products = array();
+
+//         // Lặp qua các sản phẩm trong giỏ hàng và thêm chúng vào mảng
+//         while ($result = $getProduct->fetch_assoc()) {
+//             $productId = $result['productId'];
+//             $size = $result['size'];
+//             $price = $result['price'];
+//             $image = $result['image'];
+//             $quantity = $result['quantity'];
+//             $thanhtien = $result['quantity'] * $result['price'];
+
+//             // Thêm thông tin của sản phẩm vào mảng
+//             $products[] = array(
+//                 'productId' => $productId,
+//                 'size' => $size,
+//                 'price' => $price,
+//                 'image' => $image,
+//                 'quantity' => $quantity,
+//                 'thanhtien' => $thanhtien
+//             );
+//         }
+
+//         // Tạo đơn hàng
+//         $order_time = $date;
+//         $query_order = "INSERT INTO tbl_order(productId,size,price,image,quantity,thanhtien,userId, status,order_time,recieve_time,payment) VALUES";
+
+//         foreach ($products as $product) {
+//             $query_order .= "('" . $product['productId'] . "', '" . $product['size'] . "', '" . $product['price'] . "', '" . $product['image'] . "', '" . $product['quantity'] . "', '" . $product['thanhtien'] . "', '$userId', '0', '$order_time', '0', '$payment_method'),";
+//         }
+
+//         // Xóa dấu ',' cuối cùng trong câu lệnh SQL
+//         $query_order = rtrim($query_order, ',');
+
+//         // Thực hiện câu lệnh SQL
+//         $insert_order = $this->db->insert($query_order);
+
+//         return $insert_order;
+//     }
+
+//     return false; // Trả về false nếu không có sản phẩm nào trong giỏ hàng
+// }
+        
         // hiển thị  sản phẩm ra trang lich su
         public function getOrderHistory($userId,$status,$date){
             $query = "SELECT od.* , pd.productName 
@@ -52,6 +104,8 @@
          public function recieve_Order($orderId,$status,$userId,$date_current){
             $query= "UPDATE tbl_order SET status = '$status', recieve_time = '$date_current' WHERE orderId IN $orderId AND userId='$userId'";
             $result = $this->db->update($query);
+            return $result;
+
          }
          // tải data tbl_order lên trang admin
          public function admin_getOrder($status){

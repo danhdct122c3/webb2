@@ -149,6 +149,7 @@ br {
     margin-bottom: 20px;
     display: block;
     border: 1px solid #ccc;
+    font-size: 1.5rem;
 }
 
 .cart-voucher h3 {
@@ -184,7 +185,7 @@ br {
 .cart-cen {
     display: flex;
     justify-content: right;
-    padding-top: 15px;
+    padding-top: 15px;  
     padding-bottom: 30px;
     border-bottom: 1px dotted #ccc;
 }
