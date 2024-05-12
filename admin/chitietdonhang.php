@@ -29,6 +29,7 @@ if (isset($_GET['order']) && $_GET['order']  && $_GET['userId'] != " ") {
 }
 // xác nhận trả hàng sẽ cộng dồn số lượng của đơn hàng vào sản phẩm
 if (isset($_GET['orderID']) && $_GET['orderID']  && $_GET['userId'] != " " && $_GET['status'] == 3) {
+    // if (isset($_GET['orderID']) && $_GET['orderID']  && $_GET['userId'] != " " && $_POST['status'] == 3) {
 
     $userId = $_GET['userId'];
     $username = $_GET['username'];
@@ -70,11 +71,13 @@ if (isset($_GET['username'])  && $_GET['username'] != " ") {
                             <?php
                             if ($date == Null) {
                             } else {
-
+                                $tongtien=0;
                                 $count = 0;
                                 while ($result_date = $date->fetch_assoc()) {
                                     $count += 1;
                                     //foreach($result_date as $date_order){
+                                    $tongtien+=$result_date['thanhtien'];
+
                             ?>
 
                                     <table>
@@ -83,6 +86,9 @@ if (isset($_GET['username'])  && $_GET['username'] != " ") {
                                                 <th>Đơn hàng: <?php echo $count; ?></th>
                                                 <th colspan="2">Account: <?php echo $username; ?></th>
                                                 <th colspan="5">Ngày đặt: <?php echo $result_date['order_time']; ?></th>
+                                                <th>Tổng tiền: 
+                                                                <?= number_format($result_date['value_sumTT'], 0, ',', '.') . "" . "đ"  ?>
+                                                                </th>
                                                 <th colspan="2" class="toggle">Xem chi tiết</th>
                                             </tr>
                                         </thead>
@@ -136,7 +142,7 @@ if (isset($_GET['username'])  && $_GET['username'] != " ") {
                                                             <?= number_format($result_getOrder_waiting['thanhtien'], 0, ',', '.') . "" . "đ"  ?>
                                                         </td>
                                                         <td style="width:250px;">
-                                                            <?= $result_getOrder_waiting['diaChi']; ?>
+                                                            <?= $result_getOrder_waiting['diaChi'].",". $result_getOrder_waiting['ward'].",". $result_getOrder_waiting['district'].",". $result_getOrder_waiting['city']; ?>
                                                         </td>
                                                         <td style="color:red;cursor:pointer">Đang chờ xác nhận</td>
 
@@ -191,6 +197,9 @@ if (isset($_GET['username'])  && $_GET['username'] != " ") {
                                                             <th>Đơn hàng: <?php echo $count; ?></th>
                                                             <th colspan="2">Account: <?php echo $username; ?></th>
                                                             <th colspan="5">Ngày đặt: <?php echo $result_date['order_time']; ?></th>
+                                                            <th>Tổng tiền: 
+                                                                <?= number_format($result_date['value_sumTT'], 0, ',', '.') . "" . "đ"  ?>
+                                                                </th>
                                                             <th colspan="2" class="toggle">Xem chi tiết</th>
                                                         </tr>
                                                     </thead>
@@ -243,7 +252,7 @@ if (isset($_GET['username'])  && $_GET['username'] != " ") {
                                                                         <?= number_format($result_getOrder_waiting['thanhtien'], 0, ',', '.') . "" . "đ"  ?>
                                                                     </td>
                                                                     <td style="width:250px;">
-                                                                        <?= $result_getOrder_waiting['diaChi']; ?>
+                                                                        <?= $result_getOrder_waiting['diaChi'].",". $result_getOrder_waiting['ward'].",". $result_getOrder_waiting['district'].",". $result_getOrder_waiting['city']; ?>
                                                                     </td>
                                                                     <td style="color:blue;cursor:pointer">Đang vận chuyển</td>
                                                                 </tr>
@@ -290,6 +299,9 @@ if (isset($_GET['username'])  && $_GET['username'] != " ") {
                                                                 <th colspan="2">Account: <?php echo $username; ?></th>
                                                                 <th colspan="2">Ngày đặt: <?php echo $result_date['order_time']; ?></th>
                                                                 <th colspan="3">Ngày giao: <?php echo $result_date['recieve_time']; ?></th>
+                                                                <th>Tổng tiền: 
+                                                                <?= number_format($result_date['value_sumTT'], 0, ',', '.') . "" . "đ"  ?>
+                                                                </th>
                                                                 <th colspan="2" class="toggle">Xem chi tiết</th>
                                                             </tr>
                                                         </thead>
@@ -342,7 +354,7 @@ if (isset($_GET['username'])  && $_GET['username'] != " ") {
                                                                             <?= number_format($result_getOrder_waiting['thanhtien'], 0, ',', '.') . "" . "đ"  ?>
                                                                         </td>
                                                                         <td style="width:250px;">
-                                                                            <?= $result_getOrder_waiting['diaChi']; ?>
+                                                                            <?= $result_getOrder_waiting['diaChi'].",". $result_getOrder_waiting['ward'].",". $result_getOrder_waiting['district'].",". $result_getOrder_waiting['city']; ?>
                                                                         </td>
                                                                         <td style="color:blue;cursor:pointer">Đã nhận được hàng</td>
                                                                     </tr>
@@ -491,6 +503,9 @@ if (isset($_GET['username'])  && $_GET['username'] != " ") {
                             <th>Đơn hàng: <?php echo $count; ?></th>
                             <th colspan="2">Account: <?php echo $username; ?></th>
                             <th colspan="5">Ngày đặt: <?php echo $result_date['order_time']; ?></th>
+                            <th>Tổng tiền: 
+                                <?= number_format($result_date['value_sumTT'], 0, ',', '.') . "" . "đ"  ?>
+                            </th>
                             <th colspan="2" class="toggle">Xem chi tiết</th>
                         </tr>
                     </thead>
@@ -543,7 +558,7 @@ if (isset($_GET['username'])  && $_GET['username'] != " ") {
                                         <?= number_format($result_getOrder_waiting['thanhtien'], 0, ',', '.') . "" . "đ"  ?>
                                     </td>
                                     <td style="width:250px;">
-                                        <?= $result_getOrder_waiting['diaChi']; ?>
+                                        <?= $result_getOrder_waiting['diaChi'].",". $result_getOrder_waiting['ward'].",". $result_getOrder_waiting['district'].",". $result_getOrder_waiting['city']; ?>
                                     </td>
                                     <?php
                                     if ($result_getOrder_waiting['status'] == -1) {

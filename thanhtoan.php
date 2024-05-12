@@ -168,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                         <td>Phường/Xã</td>
                                                         <td>
                                                         <input type="text" name="ward" value="<?php echo $result_infor_user['ward'] ?>"> 
-                                                       
+                                                      
                                                         </td>
                                                     </tr>
                                                     <tr style="line-height:50px;">

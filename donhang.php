@@ -40,7 +40,73 @@ if (isset($_GET['status']) && $_GET['status'] == 2) {
     $update_status = $order->update_Status_Order($orderId, 3, $userId);
 }
 ?>
-
+<?php
+function checkPayment($payment)
+{
+    if($payment==1) return 'Thanh toán khi nhận hàng';
+    return "Chuyển khoản";
+}
+?>
+<?php
+function checkStatus($status)
+{
+    if($status==0)
+    {
+        return 'Chờ xác nhận';
+        // return '<td style="color:red;cursor:pointer">Chờ xác nhận</td>';
+    }
+    if($status==1)
+    {
+        return "Đang giao";
+    }
+    if($status==2)
+    {
+        return "Đã giao";
+    }
+    if($status==3)
+    {
+        return "Chờ xác nhận trả hàng";
+    }
+    if($status==4)
+    {
+        return "Đã trả hàng";
+    }
+    if($status==-1)
+    {
+        return "Đã Hủy";
+    }
+}
+?>
+<?php
+function checkStatus1($status)
+{
+    if($status==0)
+    {
+        return 0;
+        // return '<td style="color:red;cursor:pointer">Chờ xác nhận</td>';
+    }
+    if($status==1)
+    {
+        return 1;
+    }
+    if($status==2)
+    {
+        return 2;
+    }
+    if($status==3)
+    {
+        return 3;
+    }
+    if($status==4)
+    {
+        return 4;
+    }
+    if($status==-1)
+    {
+        return -1;
+    }
+}
+?>
 <body>
     <div class="content">
         <div class="grid">
@@ -49,7 +115,7 @@ if (isset($_GET['status']) && $_GET['status'] == 2) {
         <div class="grid wide" style="border-top: 1px solid #ccc;">
             <div class="account-body1">
                 <div class="row">
-                    <div class="col l-3  underline">
+                    <div class="col l-2  underline">
                         <div class="category-all">
                             <ul>
                                 <li style="display: flex;
@@ -59,20 +125,13 @@ if (isset($_GET['status']) && $_GET['status'] == 2) {
                                 border-bottom: 1px solid #ccc;">
                                     <span class="ti-user" style="padding: 10px;border: 1px solid;border-radius: 50%;"></span>
                                     <a href="" style="text-decoration: none;padding: 0 10px;font-family: var(--font-family-monospace); color: black;
-                                font-weight: bold"> Quỳnh Linh</a>
+                                font-weight: bold"> </a>
                                 </li>
                                 <li class="category">
                                     <span class="ti-user"></span>
                                     <a href="account.php"> Thông tin tài khoản</a>
                                 </li>
-                                <!-- <li class="category">
-                                    <span class="ti-comments"></span>
-                                    <a href=""> Thông báo của tôi</a>
-                                </li> -->
-                                <!-- <li class="category">
-                                    <span class="ti-printer"></span>
-                                    <a href="tinhtrangdonhang.php"> Tình trạng đơn hàng</a>
-                                </li> -->
+                                
                                 <li class="category">
                                     <span class="ti-printer"></span>
                                     <a href="#"> Quản lý đơn hàng</a>
@@ -85,46 +144,44 @@ if (isset($_GET['status']) && $_GET['status'] == 2) {
                                     <span class="ti-envelope"></span>
                                     <a href=""> Thông tin thanh toán</a>
                                 </li>
-                                <!-- <li class="category">
-                                    <span class="ti-write"></span>
-                                    <a href=""> Nhận xét sản phẩm đã mua</a>
-                                </li> -->
-                                <!-- <li class="category">
-                                    <span class="ti-ink-pen"></span>
-                                    <a href=""> Sản phẩm đã xem</a>
-                                </li> -->
-                                <!-- <li class="category">
-                                    <span class="ti-ink-pen"></span>
-                                    <a href=""> Sản phẩm yêu thích</a>
-                                </li> -->
-                                <!-- <li class="category">
-                                    <span class="ti-shopping-cart-full"></span>
-                                    <a href=""> Sản phẩm mua sau</a>
-                                </li> -->
-                                <!-- <li class="category">
-                                    <span class="ti-star"></span>
-                                    <a href=""> Nhận xét của tôi</a>
-                                </li> -->
-                                <!-- <li class="category">
-                                    <span class="ti-ticket"></span>
-                                    <a href=""> Mã giảm giá</a>
-                                </li> -->
+                 
                             </ul>
                         </div>
                     </div>
                     <div class="col m-12 l-9">
                         <h3 style="font-weight: 500;font-size: 24px;line-height: 32px;text-transform: uppercase;color: #221f20;display: flex;align-items: center;">Quản lí đơn hàng</h3>
                         <ul style="display:flex;">
-                            <li class="QLdonhang" onclick="changeProductList('choXN',this)">Chờ xác nhận</li>
-                            <li class="QLdonhang" onclick="changeProductList('daNH',this)">Đang giao</li>
-                            <li class="QLdonhang" onclick="changeProductList('daGiao',this)">Đã giao</li>
-                            <li class="QLdonhang" onclick="changeProductList('traHang',this)">Trả hàng</li>
-                            <li class="QLdonhang" onclick="changeProductList('daHuy',this)">Đã hủy</li>
+                            <!-- <li class="QLdonhang" onclick="<a href='donhang.php' >">Chờ xác nhận</li> -->
+                            <li class="QLdonhang" style="display: none;" onclick="changeProductList('choXN',this)">Chờ xác nhận</li>
+                            <!-- <li class="QLdonhang" style=" background-color:#2a2b2c;"><a style="color:#fff;" href="donhang.php">Làm mới</a></li> -->
+                            <li class="QLdonhang" onclick="window.location.href='donhang.php'" style="background-color:#2a2b2c;">
+    <a style="color:#fff;" >Làm mới</a>
+</li>
+                            <!-- <a style="color: #fff;" href="donhang.php">  <li class="QLdonhang" ></li>làm mới</a> -->
+                            <li style="display:none;" class="QLdonhang" onclick="changeProductList('daNH',this)">Đang giao</li>
+                            <li style="display:none" class="QLdonhang" onclick="changeProductList('daGiao',this)">Đã giao</li>
+                            <li style="display:none;" class="QLdonhang" onclick="changeProductList('traHang',this)">Trả hàng</li>
+                            <li  style="display:none;" class="QLdonhang" onclick="changeProductList('daHuy',this)">Đã hủy</li>
                         </ul>
                         <div class="col l-12">
+                      
+
                             <!-- <table id="choXN" class="table table_0"> -->
+                            <!-- <table class="choXN table_0" > -->
+                            <table style="padding: 0 10px; "  >
+
+                                    
+                                                <th style="font-size:1rem;">Đơn hàng</th>
+                                                <th style="font-size:1rem;">Tên người đặt</th>
+                                                <th style="font-size:1rem;">Ngày đặt</th>
+                                                <th style="font-size:1rem;">Tổng tiền</th>
+                                                <th style="font-size:1rem;">Trạng thái</th>
+                                                <th></th>
+                                            
+                                    </table>
                             <?php
-                            $date = $order->order_date(Session::get('user_id'), '(0)');
+                            $date = $order->order_date1(Session::get('user_id'));
+                            $name = $order->order_date1(Session::get('userId'));
                             if ($date == Null) {
                             } else {
 
@@ -133,33 +190,10 @@ if (isset($_GET['status']) && $_GET['status'] == 2) {
                                     $count += 1;
                                     //foreach($result_date as $date_order){
                             ?>
-                                    <table id="choXN" class="choXN table_0">
-                                        <thead>
-                                            <tr>
-                                                <th>Đơn hàng: <?php echo $count; ?></th>
-                                                <th colspan="5">Ngày đặt: <?php echo $result_date['order_time']; ?></th>
-                                                <th colspan="2" class="toggle">Xem chi tiết</th>
-                                            </tr>
-                                        </thead>
-                                        <!-- </table> -->
 
-                                        <table class="display display_0">
-                                            <thead style="background-color:blue;">
-                                                <tr>
-                                                    <th>STT</th>
-                                                    <th>Ảnh</th>
-                                                    <th>Tên</th>
-                                                    <th>Size</th>
-                                                    <th>Giá</th>
-                                                    <th>Số lượng</th>
-                                                    <th>Thành tiền</th>
-                                                    <th>Ngày đặt</th>
-                                                    <th>Tình trạng</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+
                                                 <?php
-                                                $getOrderHistory0 = $order->getOrderHistory(Session::get('user_id'), '(0)', $result_date['order_time']);
+                                                $getOrderHistory0 = $order->getOrderHistory1(Session::get('user_id'), $result_date['order_time']);
 
                                                 if ($getOrderHistory0) {
                                                     $i = 0;
@@ -169,8 +203,45 @@ if (isset($_GET['status']) && $_GET['status'] == 2) {
                                                         $total0 += $result_OrderHistory0['thanhtien'];
                                                         $orderID .= $result_OrderHistory0['orderId'] . ",";
                                                 ?>
+                                   
+                                    <table id="choXN " class="choXN table_0">
+                                            <tr>
+                                                <!-- <th> <?php echo $count; ?></th> -->
+                                                <th>
+                                                                <?php echo "#". $result_OrderHistory0['orderId']; ?>
+                                                                <!-- <?php echo "#". $orderID ?> -->
+                                                    </th>
+                                                <th><?php echo $result_date['name'] ?></th>
+                                                <th> <?php echo $result_date['order_time']; ?></th>
+                                                
+                                                <th> <?php echo number_format($total0, 0, ',', '.') . "" . "đ"; ?></th>
+                                                <th> <?php echo  checkStatus($result_OrderHistory0['status']); ?></th>
+                                                
+                                                <th colspan="" class="toggle">Xem chi tiết</th>
+                                            </tr>
+                                       
+                                        </table>
+
+                                        <table class="display display_0">
+                                            <thead >
+                                            <tr>
+                                              
+                                                    <th>STT</th>
+                                                    <th>Ảnh</th>
+                                                    <th>Tên sản phẩm</th>
+                                                    <th>Size</th>
+                                                    <th>Đơn giá</th>
+                                                    <th>Số lượng</th>
+                                                    <th>Địa chỉ nhận hàng</th>
+                                                    <th>Số điện thoại</th>
+                                                    <th>Hình thức thanh toán</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                               
                                                         <tr>
                                                             <td><?= ($i = $i + 1); ?></td>
+                                                            
                                                             <td>
                                                                 <div class="cart-td_title">
                                                                     <a href="chitietsanpham.php?productId=<?php echo $result_OrderHistory0['productId']; ?>"><img style="cursor:pointer;" src="./admin/upload/<?php echo $result_OrderHistory0['image'] ?>" alt="" class="app_cart-img"></a>
@@ -196,34 +267,104 @@ if (isset($_GET['status']) && $_GET['status'] == 2) {
 
                                                             <td>
                                                                 <span class="cart-current"><?php
-                                                                                            echo number_format($result_OrderHistory0['thanhtien'], 0, ',', '.') . " " . "đ";
+                                                                                            echo $result_OrderHistory0['address'].",". $result_OrderHistory0['district'].",". $result_OrderHistory0['ward']. "," . $result_OrderHistory0['city'];
                                                                                             ?></span>
                                                             </td>
                                                             <td>
                                                                 <?php
-                                                                echo $result_OrderHistory0['order_time'];
+                                                                echo $result_date['sdt'];
+                                                                // echo $result_OrderHistory0['recieve_time'];
                                                                 ?>
                                                             </td>
-                                                            <td style="color:red;cursor:pointer">Đang chờ xác nhận</td>
-
+                                                           
+                                                            <!-- <td style="cursor:pointer" ><?php echo checkStatus($result_OrderHistory0['status']); ?></td> -->
+                                                            <td><?php echo checkPayment($result_OrderHistory0['payment']); ?></td>
                                                         </tr>
+
+
+                                                        <?php
+                                                        if(checkStatus1($result_OrderHistory0['status'])==-1)
+                                                        {
+                                                       ?>
+                                                     <tr>
+                                                        <td colspan="9" style="background-color:#2a2b2c;text-align:center;color:white;">Tổng đơn hàng: <?php echo number_format($total0, 0, ',', '.') . "" . "đ"; ?></td>
+                                                        
+                                                    </tr>
+                                                    <?php }?>
+
+
+                                                       <?php
+                                                        if(checkStatus1($result_OrderHistory0['status'])==0)
+                                                        {
+                                                       ?>
+                                                    <tr>
+                                                        <td colspan="7" style="background-color:#2a2b2c;text-align:center;color:white;">Tổng đơn hàng: <?php echo number_format($total0, 0, ',', '.') . "" . "đ"; ?></td>
+                                                        <td colspan="3" class="huy_don" style="background-color:#2a2b2c;">
+                                                            <div style="display: flex;align-items: center;justify-content: space-evenly;">
+                                                                <span class="ti-trash" style="color: white;font-size: 20px;"> </span>
+                                                                <a style="text-decoration:none;font-size:20px;" onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này')" href="?orderID=<?php echo $orderID ?>">Hủy đơn</a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <?php }?>
+
+                                                    <?php
+                                                        if(checkStatus1($result_OrderHistory0['status'])==1)
+                                                        {
+                                                       ?>
+                                                  <tr>
+                                                        <td colspan="7" style="background-color:#2a2b2c;text-align:center;color:white;">Tổng đơn hàng: <?php echo number_format($total0, 0, ',', '.') . "" . "đ"; ?></td>
+                                                        <td colspan="3" class="confirm" style="background-color:#2a2b2c;">
+                                                                <div>
+                                                                    <span class="ti-check" style="color:white; font-size:15px;"></span>
+                                                                    <a style="text-decoration:none;font-size:15px;" onclick="return confirm('Bạn muốn xác nhận lấy hàng')" href="?orderID=<?php echo $orderID ?>&status=1">Đã nhận được hàng</a>
+                                                                </div>
+
+                                                        </td>
+                                                    </tr>
+                                                    <?php }?>
+                                                        
+
+                                                    <?php
+                                                        if(checkStatus1($result_OrderHistory0['status'])==2)
+                                                        {
+                                                       ?>
+                                                    <tr>
+                                                        <td colspan="7" style="background-color:#2a2b2c;text-align:center;color:white;">Tổng đơn hàng: <?php echo number_format($total0, 0, ',', '.') . "" . "đ"; ?></td>
+                                                        <td colspan="2" class="confirm" style="background-color:#2a2b2c">
+                                                            <div style="display: flex;align-items: center ; justify-content: center;">
+                                                                    <span class="ti-close" style="color: white ; font-size:15px"></span>
+                                                                    <a style="text-decoration:none;font-size:15px;" onclick="return confirm('Bạn muốn trả hàng?')" href="?orderID=<?php echo $orderID ?>&status=2" >Trả hàng</a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <?php }?>
+
+                                                    <?php
+                                                        if(checkStatus1($result_OrderHistory0['status'])==3 || checkStatus1($result_OrderHistory0['status'])==4 )
+                                                        {
+                                                       ?>
+                                                     <tr>
+                                                        <td colspan="9" style="background-color:#2a2b2c;text-align:center;color:white;">Tổng đơn hàng: <?php echo number_format($total0, 0, ',', '.') . "" . "đ"; ?></td>
+                                                        
+                                                    </tr>
+                                                    <?php }?>
+                                                
+                                                    
+
+
                                                     <?php
                                                     }
 
                                                     ?>
-                                                    <td colspan="7" style="background-color:#2a2b2c;text-align:center;color:white;">Tổng đơn hàng: <?php echo number_format($total0, 0, ',', '.') . "" . "đ"; ?></td>
-                                                    <td colspan="3" class="huy_don" style="background-color:#2a2b2c;">
-                                                        <div style="display: flex;align-items: center;justify-content: space-evenly;">
-                                                            <span class="ti-trash" style="color: white;font-size: 20px;"> </span>
-                                                            <a style="text-decoration:none;font-size:20px;" onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này')" href="?orderID=<?php echo $orderID ?>">Hủy đơn</a>
-                                                        </div>
-                                                    </td>
+                                                   
                                             <?php
                                                 }
                                             }
                                             //}
 
                                             ?>
+                                              
                                             </tbody>
                                         </table>
                                     </table>
@@ -242,6 +383,7 @@ if (isset($_GET['status']) && $_GET['status'] == 2) {
                                         //foreach($result_date1 as $date_order1){
                                 ?>
                                         <table id="daNH" class="daNH table_1">
+
                                             <thead>
                                                 <tr>
                                                     <th>Đơn hàng: <?php echo $count; ?></th>
@@ -326,6 +468,7 @@ if (isset($_GET['status']) && $_GET['status'] == 2) {
                                                             </div>
 
                                                         </td>
+                                                        
                                                 <?php
                                                     }
                                                 }
@@ -432,9 +575,24 @@ if (isset($_GET['status']) && $_GET['status'] == 2) {
 
                                                             <td colspan="2" class="confirm" style="background-color:#2a2b2c">
                                                             <div style="display: flex;align-items: center ; justify-content: center;">
-                                                                <span class="ti-close" style="color: white ; font-size:15px"></span>
-                                                                <a style="text-decoration:none;font-size:15px;" onclick="return confirm('Bạn muốn trả hàng?')" href="?orderID=<?php echo $orderID ?>&status=2" >Trả hàng</a>
-                                                            </div>
+                                                                    <span class="ti-close" style="color: white ; font-size:15px"></span>
+                                                                    <a style="text-decoration:none;font-size:15px;" onclick="return confirmAndRedirect('<?php echo $orderID ?>')" href="thanhtoan.php" >Trả hàng</a>
+                                                                    
+                                                                </div>
+                                                                <script>
+                                                                    function confirmAndRedirect(orderID) {
+                                                                        if (confirm('Bạn muốn trả hàng?')) {
+                                                                            // Chuyển hướng đến trang donhang.php với dữ liệu trên URL
+                                                                            window.location.href = 'donhang.php?orderID=' + orderID + '&status=2';
+                                                                            return true; // Nếu bạn muốn thực hiện chuyển hướng
+                                                                        }
+                                                                        return false; // Nếu bạn không muốn thực hiện chuyển hướng
+                                                                    }
+                                                                </script>
+
+
+                            
+                        </script>
                                                             </td>
                                                     <?php
                                                         }

@@ -18,7 +18,7 @@
             <section class="recent">
             <div class="activity-grid">
                 <div class="activity-card">
-                        <div class="activity-select">
+                        <!-- <div class="activity-select">
                             <div class="activity-selec-1">
                                 <select name="" id="">
                                     <option value="C1">Sắp xếp theo khoảng thời gian</option>
@@ -33,7 +33,7 @@
                                     <option value="C1">Từ cao đến thấp</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
 
                         <ul style="display:flex;">
                                 <li class="QLdonhang">Chờ xác nhận</li>
@@ -76,7 +76,7 @@
                                     }
                                 ?>
                                 </tbody>
-                        </table>
+                    </table>
 
                         <table class="table table_1">
                             <thead>

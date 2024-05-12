@@ -153,17 +153,17 @@
 						</div>
 						<div class="row">
 							<ul>
-								<li>
+								<li style="display: none;" >
 									<button class="best_Seller " onclick="changeBestSeller('women',this)">
 										MLL Women
 									</button>
 								</li>
-								<li>
+								<li style="display: none;" >
 									<button class="best_Seller" onclick="changeBestSeller('men',this)">
 										MLL Men
 									</button>
 								</li>
-								<li>
+								<li style="display: none;" >
 									<button class="best_Seller" onclick="changeBestSeller('kids',this)">
 										MLL Kids
 									</button>
@@ -173,7 +173,7 @@
 						<div id="women" class="row">
 							<div class="app_suggestion">
 								<?php
-								$getProduct_Women = $product->getProduct_Women();
+								$getProduct_Women = $product->getProduct_seller();
 								if ($getProduct_Women) {
 								?>
 									<button class="arrow_left">
@@ -182,13 +182,13 @@
 									while ($result = $getProduct_Women->fetch_assoc()) {
 									?>
 										<div class="col l-3 ">
-											<a href="chitietsanpham.php?productId=<?php echo $result['productId'] ?>&&brandId=<?php echo $result['brandId'] ?>&&type=<?php echo $result['type'] ?>">
+											<a href="chitietsanpham.php?productId=<?php echo $result['productId'] ?>&&brandId=<?php echo $result['brandId'] ?>">
 												<div class="home-product-item">
 													<div class="ovelay-img">
 														<img src="./admin/upload/<?php echo $result['image'] ?>" alt="" class="home-product-item_img">
 														<div class="overlay">
 															<!--buy-btn------>
-															<a href="chitietsanpham.php?productId=<?php echo $result['productId'] ?>&&brandId=<?php echo $result['brandId'] ?>&&type=<?php echo $result['type'] ?>" class="buy-btn">Buy Now</a>
+															<a href="chitietsanpham.php?productId=<?php echo $result['productId'] ?>&&brandId=<?php echo $result['brandId'] ?>" class="buy-btn">Buy Now</a>
 														</div>
 													</div>
 													<h4 class="home-product-item_name"><?php echo $result['productName'] ?></h4>
@@ -208,7 +208,7 @@
 								?>
 							</div>
 						</div>
-						<div id="men" class="row">
+						<!-- <div id="men" class="row">
 
 							<div class="app_suggestion ">
 								<?php
@@ -226,7 +226,7 @@
 													<div class="ovelay-img">
 														<img src="./admin/upload/<?php echo $result['image'] ?>" alt="" class="home-product-item_img">
 														<div class="overlay">
-															<!--buy-btn------>
+															
 															<a href="chitietsanpham.php?productId=<?php echo $result['productId'] ?>&&brandId=<?php echo $result['brandId'] ?>&&type=<?php echo $result['type'] ?>" class="buy-btn">Buy Now</a>
 														</div>
 													</div>
@@ -247,8 +247,8 @@
 								?>
 
 							</div>
-						</div>
-						<div id="kids" class="row">
+						</div> -->
+						<!-- <div id="kids" class="row">
 							<div class="app_suggestion">
 								<?php
 								$getProduct_Kid = $product->getProduct_Kid();
@@ -265,7 +265,7 @@
 													<div class="ovelay-img">
 														<img src="./admin/upload/<?php echo $result['image'] ?>" alt="" class="home-product-item_img">
 														<div class="overlay">
-															<!--buy-btn------>
+															
 															<a href="chitietsanpham.php?productId=<?php echo $result['productId'] ?>&&brandId=<?php echo $result['brandId'] ?>&&type=<?php echo $result['type'] ?>" class="buy-btn">Buy Now</a>
 														</div>
 													</div>
@@ -287,7 +287,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 				<div class="grid wide">
 					<div class="ds-layout">
 						<h2 class="section-font">
@@ -403,14 +403,14 @@
 				</div>
 			</div>
 		</div>
-		<?php include './inc/footer.php' ?>
+		
 	</section>
 	<button onclick="topFunction()" id="backToTop" title="Go to top" style="display: block;"><i class="ti-angle-up" style="font-size: 25px;"></i>
 	</button>
 	<script src="./assets/js/product.js"></script>
 	<script src="./assets/js/slideshow.js"></script>
 	<script type="text/javascript" src="./assets/js/script.js"></script>
-
+	
 </body>
-
+<?php include './inc/footer.php' ?>
 </html>

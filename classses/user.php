@@ -13,64 +13,11 @@ class user
     {
         $this->db = new Database();
         $this->fm = new Format();
+
     }
-    // hien thi comment
-    public function display_comment($producId)
-    {
-        $sql = "SELECT * FROM tbl_comment WHERE productId= '$producId' ORDER BY id DESC ";
-        $result = $this->db->select($sql);
-        return $result;
-    }
-    // them comment vao db
-    public function insert_comments()
-    {
-        $product_id = $_GET['productId'];
-        $tenbinhluan = $_POST['tenbinhluan'];
-        $date_comment = $_POST['date_comment'];
-        $comment = $_POST['content'];
-        if ($tenbinhluan == "" || $comment == "" || $comment == ' ') {
-            $alert = "<span class='fix_bug'>Nhập đầy đủ thông tin</span>";
-        } else {
-            $query = "INSERT INTO tbl_comment(namebl,comment,productId,dateComment) VALUES('$tenbinhluan','$comment',' $product_id','$date_comment')";
-            $result = $this->db->insert($query);
-            if ($result) {
-                $alert = "<span class='fix'>Cảm ơn bạn đã góp ý !</span>";
-                return $alert;
-            } else {
-                $alert = "<span class='fix_bug'> Bình luận thất bại !</span>";
-                return $alert;
-            }
-        }
-    }
-    // hien thi phan hoi
-    public function display_rep_comment()
-    {
-        $sql = "SELECT tb.*, cm.namebl FROM  tbl_repcomment AS tb INNER JOIN tbl_comment AS cm ON tb.nameId=cm.id";
-        $result = $this->db->select($sql);
-        return $result;
-    }
-    // them rep conments vao db
-    public function insert_rep_comments()
-    {
-        $nameId = $_POST['nameId'];
-        $name_rep = $_POST['name_rep'];
-        $rep_comment = $_POST['rep_content'];
-        if ($rep_comment == "") {
-            $alert = "<span class='fix_bug'>Nhập đầy đủ thông tin</span>";
-        } else {
-            $query = "INSERT INTO tbl_repcomment(nameId,rep,namerep) VALUES('$nameId','$rep_comment',' $name_rep')";
-            $result = $this->db->insert($query);
-            if ($result) {
-                $alert = "<span class='fix'>Phản hổi thành công !</span>";
-                return $alert;
-            } else {
-                $alert = "<span class='fix_bug'> Lỗi !</span>";
-                return $alert;
-            }
-        }
-    }
+    
     // thêm user vào DB
-    public function insert_user($data)
+    public function insert_user($data) 
     {
         // kết nối với cơ sở dữ liệu
         $username = mysqli_real_escape_string($this->db->link, $data["username"]);
@@ -81,16 +28,19 @@ class user
         $name = mysqli_real_escape_string($this->db->link, $data["name"]);
         $email = mysqli_real_escape_string($this->db->link, $data["email"]);
         $phone = mysqli_real_escape_string($this->db->link, $data["phone"]);
-        $sex = mysqli_real_escape_string($this->db->link, $data["sex"]);
-        $date = mysqli_real_escape_string($this->db->link, $data["date"]);
-        $city = mysqli_real_escape_string($this->db->link, $data["city"]);
-        $district = mysqli_real_escape_string($this->db->link, $data["district"]);
-        $ward = mysqli_real_escape_string($this->db->link, $data["ward"]);
-        $address = mysqli_real_escape_string($this->db->link, $data["address"]);
+        $sex = isset($_POST['sex']) ? mysqli_real_escape_string($this->db->link, $data["sex"]) : "";
+        $ngaySinh = isset($_POST['ngaySinh']) ? mysqli_real_escape_string($this->db->link, $data["ngaySinh"]): "";
+        $street = mysqli_real_escape_string($this->db->link, $data["street"]);
+        $ward = isset($_POST['ward']) ? mysqli_real_escape_string($this->db->link, $data["ward"]) : "";
+        $district = isset($_POST['district']) ? mysqli_real_escape_string($this->db->link, $data["district"]) : "";
+        $city = isset($_POST['city']) ? mysqli_real_escape_string($this->db->link, $data["city"]) : "";
         $cauHoiBiMat = mysqli_real_escape_string($this->db->link, $data["cauHoiBiMat"]);
+        $trangThai = 0;
+        
+    
         if (
             $username == "" ||  $password == "" ||  $relyPassword == "" ||  $name == "" ||  $email == ""
-            ||  $phone == "" ||  $sex == "" ||  $date == "" ||  $address == "" ||  $cauHoiBiMat == ""
+            ||  $phone == ""||  $ngaySinh == "" || $street == "" || $ward == "" || $district == "" || $city == "" || $cauHoiBiMat == "" 
         ) {
             $alert = "<span class='error'>Nhập đầy đủ thông tin</span>";
             return $alert;
@@ -111,8 +61,8 @@ class user
                         $alert = "<span class='error'> Email của bạn đã được đăng ký </span>";
                         return $alert;
                     } else {
-                        $query = "INSERT INTO tbl_uer(name,username,userPassword,email,gioiTinh,sdt,ngaySinh,diaChi,cauHoiBM,city,district,ward) VALUES('$name','$username','$password'
-                        ,'$email','$sex','$phone','$date','$address','$cauHoiBiMat','$city','$district','$ward')";
+                        $query = "INSERT INTO tbl_uer(name,username,userPassword,email,gioiTinh,sdt,ngaySinh,street,ward,district,city,cauHoiBM,trangThai) VALUES('$name','$username','$password'
+                        ,'$email','$sex','$phone','$ngaySinh','$street','$ward','$district','$city','$cauHoiBiMat','$trangThai')";
                         $result = $this->db->insert($query);
                         if ($result) {
                             $alert = "<span class='success'> Đăng ký thành công  </span>";
@@ -126,6 +76,7 @@ class user
             }
         }
     }
+
     // đăng nhập
     public function login_user($data)
     {
@@ -135,50 +86,93 @@ class user
             $alert = "<span class='error'>Nhập đầy đủ thông tin</span>";
             return $alert;
         } else {
-            $check_username = "SELECT * FROM tbl_uer WHERE username='$username' AND userPassword='$password'";
+            $check_username = "SELECT * FROM tbl_uer WHERE username='$username' AND userPassword='$password' ";
             $result = $this->db->select($check_username);
             if ($result) {
                 $value = $result->fetch_assoc();
-                // người dùng đã đăng nhập thành công rồi
+                if ($value['trangThai'] == 1) {
+                    // Nếu tài khoản đã bị cấm, hiển thị thông báo và ngăn họ đăng nhập
+                    $alert = "<span class='error'>Tài khoản của bạn đã bị khóa</span>";
+                    return $alert;
+                } else {
+                // người dùng đã đăng nhập thành công 
                 Session::set('user_login', true);
                 Session::set('user_id', $value['userId']);
                 Session::set('user_name', $value['name']);
                 header('Location:index.php');
+                exit();
+                }
             } else {
-                $alert = "<span class='error'> Sai tài khoản hoặc mật khẩu </span>";
+                $alert = "<span class='error'>Tên đăng nhập hoặc mật khẩu không đúng</span>";
                 return $alert;
             }
         }
     }
-    public function show_User($userId)
+
+    //Khóa người dùng
+public function ban_user($user_Id) {
+    $trangThai = 1; // Cập nhật trạng thái thành 1 khi khóa
+    
+    $query = "UPDATE tbl_uer SET trangThai='$trangThai' WHERE userId='$user_Id'";
+    $result_check = $this->db->update($query);
+    if ($result_check) {
+        $alert = "<span class='success'>Khách hàng đã bị khóa thành công</span>";
+        return $alert;
+    } else {
+        $alert = "<span class='error'>Có lỗi xảy ra khi khóa khách hàng</span>";
+        return $alert;
+    }
+}
+
+//Mở khóa người dùng
+public function unban_user($user_Id) {
+    $trangThai = 0; // Cập nhật trạng thái thành 0 khi mở khóa
+    
+    $query = "UPDATE tbl_uer SET trangThai='$trangThai' WHERE userId='$user_Id'";
+    $result_check = $this->db->update($query);
+    if ($result_check) {
+        $alert = "<span class='success'>Khách hàng đã được mở khóa thành công</span>";
+        return $alert;
+    } else {
+        $alert = "<span class='error'>Có lỗi xảy ra khi mở khóa khách hàng</span>";
+        return $alert;
+    }
+}
+
+    public function show_User ($userId)
     {
-        $query = "SELECT *  FROM tbl_uer WHERE userId = '$userId'";
+        $query = "SELECT*  FROM tbl_uer WHERE userId = '$userId'";
         $result = $this->db->select($query);
         return $result;
     }
-    // hiển hị khách hàng trong admin
-    public function showKHAdmin()
-    {
-        $query = "SELECT us.* , SUM(od.thanhtien) AS sumTT
-        FROM tbl_uer AS us INNER JOIN tbl_order AS od ON us.userId =od.userId
-        GROUP BY  od.userId
-        ORDER BY od.userId";
-        $result = $this->db->select($query);
-        return $result;
-    }
-    // xóa khách hàng
-    public function del_user($id)
-    {
-        $query = "DELETE FROM tbl_uer where userId = '$id'";
-        $result = $this->db->delete($query);
-        if ($result) {
-            $alert = "<span class='success'> Xóa thành công  </span>";
-            return $alert;
-        } else {
-            $alert = "<span class='error'> Xóa không thành công  </span>";
-            return $alert;
+    // hiển thị khách hàng trong admin
+        public function showKHAdmin()
+        {
+            $query = "SELECT us.* , CONCAT(us.street, ', ', us.ward, ', ', us.district, ', ', us.city) AS diaChi 
+              FROM tbl_uer AS us
+              LEFT JOIN tbl_order AS od ON us.userId = od.userId
+              GROUP BY us.userId
+              ORDER BY us.userId";
+    $result = $this->db->select($query);
+    return $result;
         }
+    
+    public function showthongkeAdmin()
+    {
+        $query = "SELECT us.* , SUM(od.thanhtien) AS sumTT, CONCAT(us.street, ', ', us.ward, ', ', us.district, ', ', us.city) AS diaChi
+        FROM tbl_uer AS us 
+        LEFT JOIN tbl_order AS od ON us.userId =od.userId
+        GROUP BY us.userId
+        ORDER BY us.userId";
+        $result = $this->db->select($query);
+        return $result;
     }
+
+    public function addressString($street, $ward, $district, $city) {
+        return $street . ', ' . $ward . ', ' . $district . ', ' . $city;
+    }
+    
+
     public function showCauHoiBiMat($username, $cauHoiBiMat)
     {
         $cauHoiBiMat = mysqli_real_escape_string($this->db->link, $cauHoiBiMat);
@@ -225,18 +219,21 @@ class user
         $name = mysqli_real_escape_string($this->db->link, $data["name"]);
         $email = mysqli_real_escape_string($this->db->link, $data["email"]);
         $phone = mysqli_real_escape_string($this->db->link, $data["phone"]);
-        $sex = mysqli_real_escape_string($this->db->link, $data["sex"]);
-        $date = mysqli_real_escape_string($this->db->link, $data["date"]);
-        $city = mysqli_real_escape_string($this->db->link, $data["city"]);
-        $district = mysqli_real_escape_string($this->db->link, $data["district"]);
-        $ward = mysqli_real_escape_string($this->db->link, $data["ward"]);
-        $address = mysqli_real_escape_string($this->db->link, $data["address"]);
+        $sex = isset($_POST['sex']) ? mysqli_real_escape_string($this->db->link, $data["sex"]) : "";
+        $ngaySinh = mysqli_real_escape_string($this->db->link, $data["ngaySinh"]);
+        $street = mysqli_real_escape_string($this->db->link, $data["street"]);
+        $ward = isset($_POST['ward']) ? mysqli_real_escape_string($this->db->link, $data["ward"]) : "";
+        $district = isset($_POST['district']) ? mysqli_real_escape_string($this->db->link, $data["district"]) : "";
+        $city = isset($_POST['city']) ? mysqli_real_escape_string($this->db->link, $data["city"]) : "";
+        
 
-        if ($name == "" ||  $email == "" ||  $phone == "" ||  $sex == "" ||  $date == "" ||  $address == "") {
+        if ($name == "" ||  $email == "" ||  $phone == "" ||  $sex == "" ||  $ngaySinh == "" || $street == "" || $ward == "" || $district =="" || $city == "" 
+        ) {
             $alert = "<span class='error'>Nhập đầy đủ thông tin</span>";
             return $alert;
         } else {
-            $update_user = "UPDATE tbl_uer SET name='$name', email='$email', sdt='$phone', gioiTinh='$sex', ngaySinh='$date', city=$city, district=$district,ward=$ward,diaChi='$address' WHERE userId='$user_Id'";
+            $update_user = "UPDATE tbl_uer SET name='$name', email='$email', sdt='$phone', gioiTinh='$sex', ngaySinh='$ngaySinh', street='$street', ward='$ward', district='$district', city='$city'
+            WHERE userId='$user_Id'";
             $result_check = $this->db->update($update_user);
             if ($result_check) {
                 $alert = "<span class='success'> Update Successfully </span>";

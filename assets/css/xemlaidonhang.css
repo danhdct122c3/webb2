@@ -94,7 +94,7 @@ table {
     background: #fff;
     border-collapse: collapse;
     font-size: 15px;
-    padding:0 10px;
+    /* padding:0 10px; */
 }
 
 th {
@@ -104,6 +104,7 @@ th {
     font-size: 12px;
     text-align: center;
     width: 14.28571428571429%;
+    /* width: 80%; */
 }
 
 tr {

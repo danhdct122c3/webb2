@@ -152,19 +152,7 @@
                 <img id="preview" src="#" alt="Hình ảnh sản phẩm" style="max-width: 200px; max-height: 200px;">
             </td>
         </tr>
-				<tr>
-                    <td class="form_title">
-                        <label>Kiểu sản phẩm</label>
-                    </td>
-                    <td>
-                        <select id="select" name="type">
-                            <option>Select Type</option>
-                            <option value="0">Quần áo nam</option>
-                            <option value="1">Quần áo nữ</option>
-                            <option value="2">Quần áo trẻ em</option>
-                        </select>
-                    </td>
-                </tr>
+				
 
 				<tr>
                     <td></td>

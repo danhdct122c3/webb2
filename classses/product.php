@@ -23,7 +23,7 @@ class product
         $brand = mysqli_real_escape_string($this->db->link, $data["brand"]);
         $product_desc = mysqli_real_escape_string($this->db->link, $data["product_desc"]);
         $price = mysqli_real_escape_string($this->db->link, $data["price"]);
-        $type = mysqli_real_escape_string($this->db->link, $data["type"]);
+       
         $quantity = mysqli_real_escape_string($this->db->link, $data["productQuantity"]);
 
         //kiểm tra hình ảnh và lấy hình ảnh cho vào folder uploads
@@ -36,7 +36,7 @@ class product
         $file_ext = strtolower(end($div));
         $unique_image = substr(md5(time()), 0, 10) . '.' . $file_ext;
         $uploaded_image = "upload/" . $unique_image;
-        if ($productName == "" ||  $brand == "" || $typeProduct == "" ||  $category == "" ||  $product_desc == "" ||  $price == "" ||  $type == "" ||  $file_name == "" || $quantity == "") {
+        if ($productName == "" ||  $brand == "" || $typeProduct == "" ||  $category == "" ||  $product_desc == "" ||  $price == ""  ||  $file_name == "" || $quantity == "") {
             $alert = "Không được bỏ trống";
             return $alert;
         } elseif($quantity < 0){
@@ -50,8 +50,8 @@ class product
                 return "Tên sản phẩm đã tồn tại";
             }else{
                 move_uploaded_file($file_temp, $uploaded_image);
-                $query = "INSERT INTO tbl_product(productName,brandId,catId,product_desc,price,type,quantity,image,typeProductId) VALUES('$productName',
-                    '$brand','$category','$product_desc','$price','$type','$quantity','$unique_image','$typeProduct')";
+                $query = "INSERT INTO tbl_product(productName,brandId,catId,product_desc,price,quantity,image,typeProductId) VALUES('$productName',
+                    '$brand','$category','$product_desc','$price','$quantity','$unique_image','$typeProduct')";
                 $result = $this->db->insert($query);
                 if ($result) {
                     $alert = "<span class='success'> Thêm thành công  </span>";
@@ -64,17 +64,54 @@ class product
         }
     }
 
+    // public function show_product()
+    // {
+    //     $query = "SELECT pd.*, cat.catName, br.brandName, tpd.typeProductName, od.productId AS orderProductId
+    //                 FROM tbl_product AS pd 
+    //                 INNER JOIN category AS cat ON pd.catId = cat.catId   
+    //                 INNER JOIN tbl_brand AS br ON pd.brandId = br.brandId
+    //                 INNER JOIN tbl_type_product AS tpd ON pd.typeProductId = tpd.typeProductID
+    //                 INNER JOIN tbl_order AS od ON pd.productId = od.productId
+    //                 ORDER BY pd.productId DESC";
+    //     $result = $this->db->select($query);
+    //     return $result;
+    // }
+
     public function show_product()
-    {
-        $query = "SELECT pd.* , cat.catName , br.brandName , tpd.typeProductName
-                FROM tbl_product AS pd 
-                INNER JOIN category AS cat ON pd.catId=cat.catId   
-                INNER JOIN tbl_brand AS br ON pd.brandId=br.brandId
-                INNER JOIN tbl_type_product AS tpd ON pd.typeProductId= tpd.typeProductID 
-                order by pd.productId desc";
-        $result = $this->db->select($query);
-        return $result;
-    }
+{
+    $query = "SELECT pd.*, cat.catName, br.brandName, tpd.typeProductName, 
+              SUM(od.quantity) AS total_sold,od.status 
+             
+              FROM tbl_product AS pd
+              INNER JOIN category AS cat ON pd.catId = cat.catId
+              INNER JOIN tbl_brand AS br ON pd.brandId = br.brandId
+              INNER JOIN tbl_type_product AS tpd ON pd.typeProductId = tpd.typeProductID
+              LEFT JOIN tbl_order AS od ON pd.productId = od.productId
+              WHERE pd.status_product=0
+              GROUP BY pd.productId
+              ORDER BY pd.productId DESC";
+
+    $result = $this->db->select($query);
+    return $result;
+}
+public function show_product1()
+{
+    $query = "SELECT pd.*, cat.catName, br.brandName, tpd.typeProductName, 
+              SUM(od.quantity) AS total_sold,od.status 
+            --   CASE WHEN od.status = '2' THEN 'Đã bán' ELSE 'Chưa bán' END AS status_product
+              FROM tbl_product AS pd
+              INNER JOIN category AS cat ON pd.catId = cat.catId
+              INNER JOIN tbl_brand AS br ON pd.brandId = br.brandId
+              INNER JOIN tbl_type_product AS tpd ON pd.typeProductId = tpd.typeProductID
+              LEFT JOIN tbl_order AS od ON pd.productId = od.productId AND od.status=2
+             
+              GROUP BY pd.productId
+              ORDER BY total_sold DESC";
+
+    $result = $this->db->select($query);
+    return $result;
+}
+
 
     public function getproductbyId($id)
     {
@@ -82,7 +119,7 @@ class product
         $result = $this->db->select($query);
         return $result;
     }
-    public function getproductbyBrandId($id,$type)
+    public function getproductbyBrandId($id)
     {
         $sp_tungtrang = 8;
         if(!isset($_GET['trang'])){
@@ -95,7 +132,7 @@ class product
 
         $query = "SELECT pd.* , br.brandName 
         FROM tbl_product AS pd INNER JOIN tbl_brand AS br ON pd.brandId=br.brandId 
-        WHERE pd.brandId  = '$id' AND pd.type = '$type'  LIMIT $product_start,$sp_tungtrang";
+        WHERE pd.brandId  = '$id' AND pd.status_product=0  LIMIT $product_start,$sp_tungtrang";
         $result = $this->db->select($query);
         return $result;
     }
@@ -112,11 +149,11 @@ class product
 
         $query = "SELECT pd.* 
         FROM tbl_product AS pd
-        WHERE pd.catId  = '$id'  LIMIT $product_start,$sp_tungtrang";
+        WHERE pd.catId  = '$id' AND pd.status_product=0 LIMIT $product_start,$sp_tungtrang";
         $result = $this->db->select($query);
         return $result;
     } 
-    public function getproductbyTypeProductId($id,$type)
+    public function getproductbyTypeProductId($id)
     {
         $sp_tungtrang = 8;
         if(!isset($_GET['trang'])){
@@ -129,24 +166,24 @@ class product
 
         $query = "SELECT pd.* , tpd.typeProductName 
         FROM tbl_product AS pd  INNER JOIN tbl_type_product AS tpd ON pd.typeProductId= tpd.typeProductID
-        WHERE pd.typeProductId  = '$id' AND pd.type = '$type' LIMIT $product_start,$sp_tungtrang";
+        WHERE pd.typeProductId  = '$id' AND pd.status_product=0  LIMIT $product_start,$sp_tungtrang";
         $result = $this->db->select($query);
         return $result;
     }
 
-    public function getproductbyBrandId_number_page($id,$type)
+    public function getproductbyBrandId_number_page($id)
     {
         $query = "SELECT pd.* , br.brandName 
         FROM tbl_product AS pd INNER JOIN tbl_brand AS br ON pd.brandId=br.brandId 
-        WHERE pd.brandId  = '$id' AND pd.type = '$type'";
+        WHERE pd.brandId  = '$id' AND pd.status_product=0 ";
         $result = $this->db->select($query);
         return $result;
     }
-    public function getproductbyTypeProductId_number_page($id,$type)
+    public function getproductbyTypeProductId_number_page($id)
     {
         $query = "SELECT pd.* , tpd.typeProductName 
         FROM tbl_product AS pd  INNER JOIN tbl_type_product AS tpd ON pd.typeProductId= tpd.typeProductID
-        WHERE pd.typeProductId  = '$id' AND pd.type = '$type'";
+        WHERE pd.typeProductId  = '$id'  AND pd.status_product=0";
         $result = $this->db->select($query);
         return $result;
     }
@@ -159,7 +196,8 @@ class product
         $brand = mysqli_real_escape_string($this->db->link, $data["brand"]);
         $product_desc = mysqli_real_escape_string($this->db->link, $data["product_desc"]);
         $price = mysqli_real_escape_string($this->db->link, $data["price"]);
-        $type = mysqli_real_escape_string($this->db->link, $data["type"]);
+       
+        $product_status = mysqli_real_escape_string($this->db->link, $data["status_product"]);
         $addQuantity = mysqli_real_escape_string($this->db->link, $data["addQuantity"]);
 
         //kiểm tra hình ảnh và lấy hình ảnh cho vào folder uploads
@@ -181,9 +219,9 @@ class product
             return "Tên sản phẩm đã tồn tại";
         }
 
-        if($addQuantity <=  0){
+        if($addQuantity <  0){
             return "Số lượng không được âm";
-        }elseif($price <= 0){
+        }elseif($price < 0){
             return "Giá không được âm";
         }
         if (!empty($file_name)) {
@@ -199,10 +237,11 @@ class product
                         productName = '$productName',
                         brandId = '$brand',
                         catId = '$category',
-                        type = '$type',
+                      
                         quantity = '$addQuantity'+quantity,
                         price = '$price',
                         image = '$unique_image',
+                        status_product='$product_status',
                         product_desc = '$product_desc',
                         typeProductId = '$typeProduct'
                     WHERE productId = '$id'";
@@ -211,9 +250,10 @@ class product
                         productName = '$productName',
                         brandId = '$brand',
                         catId = '$category',
-                        type = '$type',
+                        
                         quantity = '$addQuantity'+quantity,
                         price = '$price',
+                        status_product='$product_status',
                         product_desc = '$product_desc',
                         typeProductId = '$typeProduct'
                     WHERE productId = '$id'";
@@ -227,6 +267,15 @@ class product
             return $alert;
         }
     }
+    public function update_status($id)
+    {
+        $query="UPDATE tbl_product
+        SET status_product = 1
+        WHERE productId = '$id'";
+        $result=$this->db->update($query);
+        return $result;
+
+    }
     public function del_product($id)
     {
         $query = "DELETE FROM tbl_product where productId = '$id'";
@@ -239,6 +288,9 @@ class product
             return $alert;
         }
     }
+
+
+
     // END BACKEND
     // hiện thị best seller quần áo nam
     public function getProduct_Men()
@@ -246,6 +298,16 @@ class product
         $query = "SELECT *,SUM(od.quantity) as quantitysales FROM tbl_product AS pd
         INNER JOIN tbl_order AS od ON od.productId = pd.productId
         where type = '0' AND od.status='2' 
+        GROUP BY od.productId
+        ORDER BY od.quantity DESC LIMIT 8 ";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    public function getProduct_seller()
+    {
+        $query = "SELECT *,SUM(od.quantity) as quantitysales FROM tbl_product AS pd
+        INNER JOIN tbl_order AS od ON od.productId = pd.productId
+        where od.status='2' 
         GROUP BY od.productId
         ORDER BY od.quantity DESC LIMIT 8 ";
         $result = $this->db->select($query);
@@ -259,6 +321,14 @@ class product
         where type = '1' AND od.status='2' 
         GROUP BY od.productId
         ORDER BY od.quantity DESC LIMIT 8 ";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    public function getProduct()
+    {
+        $query = "SELECT *,SUM(od.quantity) as quantitysales FROM tbl_product AS pd
+        INNER JOIN tbl_order AS od ON od.productId = pd.productId
+        where  od.status='2'";
         $result = $this->db->select($query);
         return $result;
     }
@@ -317,7 +387,7 @@ class product
             FROM tbl_product AS pd 
             INNER JOIN category AS cat ON pd.catId=cat.catId   
             INNER JOIN tbl_brand AS br ON pd.brandId=br.brandId
-            WHERE cat.catName='$category' AND br.brandName='$brand' AND pd.price <='$range'";
+            WHERE cat.catName='$category' AND br.brandName='$brand' AND pd.status_product=0 AND pd.price <='$range'";
         $result = $this->db->select($sql);
         return $result;
     }
@@ -392,7 +462,8 @@ class product
     }
     // all product
     public function get_all_product(){
-        $sql = "SELECT * FROM tbl_product ";
+        $sql = "SELECT * FROM tbl_product 
+        WHERE status_product=0";
         $result = $this->db->select($sql);
         return $result;
     }
@@ -420,27 +491,27 @@ class product
         if($search ==""){
 
             if($category == '(-1)' && $brand == '(-1)' && $price !=-1){
-                $sql = "SELECT * FROM tbl_product WHERE price <= '$price'  LIMIT $product_start,$sp_tungtrang";
+                $sql = "SELECT * FROM tbl_product WHERE price <= '$price' AND status_product=0 LIMIT $product_start,$sp_tungtrang";
             }elseif($category !='(-1)' && $brand =='(-1)' && $price ==-1){
-                $sql = "SELECT * FROM tbl_product WHERE catId IN $category  LIMIT $product_start,$sp_tungtrang";
+                $sql = "SELECT * FROM tbl_product WHERE catId IN $category AND status_product=0 LIMIT $product_start,$sp_tungtrang";
             }elseif($category =='(-1)' && $brand !='(-1)' && $price ==-1){
-                $sql = "SELECT * FROM tbl_product WHERE brandId IN $brand  LIMIT $product_start,$sp_tungtrang";
+                $sql = "SELECT * FROM tbl_product WHERE brandId IN $brand AND status_product=0 LIMIT $product_start,$sp_tungtrang";
             }elseif($category !='(-1)' && $brand !='(-1)' && $price ==-1){
-                $sql = "SELECT * FROM tbl_product WHERE catId IN $category AND brandId IN $brand  LIMIT $product_start,$sp_tungtrang";
+                $sql = "SELECT * FROM tbl_product WHERE catId IN $category AND  status_product=0 AND brandId IN $brand  LIMIT $product_start,$sp_tungtrang";
             }elseif($category !='(-1)' && $brand =='(-1)' && $price !=-1){
-                $sql = "SELECT * FROM tbl_product WHERE catId IN $category AND price <= '$price'  LIMIT $product_start,$sp_tungtrang";
+                $sql = "SELECT * FROM tbl_product WHERE catId IN $category AND status_product=0 AND price <= '$price'  LIMIT $product_start,$sp_tungtrang";
             }elseif($category =='(-1)' && $brand !='(-1)' && $price !=-1){
-                $sql = "SELECT * FROM tbl_product WHERE brandId IN $brand AND price <= '$price'  LIMIT $product_start,$sp_tungtrang";
+                $sql = "SELECT * FROM tbl_product WHERE brandId IN $brand AND status_product=0 AND price <= '$price'  LIMIT $product_start,$sp_tungtrang";
             }elseif($category !='(-1)' && $brand !='(-1)' && $price !=-1){
-                $sql = "SELECT * FROM tbl_product WHERE catId IN $category AND brandId IN $brand AND price <= '$price'   LIMIT $product_start,$sp_tungtrang";
+                $sql = "SELECT * FROM tbl_product WHERE catId IN $category AND status_product=0 AND brandId IN $brand AND price <= '$price'   LIMIT $product_start,$sp_tungtrang";
             }elseif($category =='(-1)' && $brand =='(-1)' && $price ==-1){
-                $sql = "SELECT * FROM tbl_product  LIMIT $product_start,$sp_tungtrang";
+                $sql = "SELECT * FROM tbl_product WHERE status_product=0 LIMIT $product_start,$sp_tungtrang";
             }
 
         }else{
 
             if($category =='(-1)' && $brand =='(-1)' && $price ==-1)
-                $sql = "SELECT * FROM tbl_product WHERE productName like '%$search%'  LIMIT $product_start,$sp_tungtrang";
+                $sql = "SELECT * FROM tbl_product WHERE productName like '%$search%' AND status_product=0  LIMIT $product_start,$sp_tungtrang";
         }
 
         $result = $this->db->select($sql);
@@ -505,7 +576,7 @@ class product
         }else{
 
             if($category =='(-1)' && $brand =='(-1)' && $price ==-1)
-                $sql = "SELECT * FROM tbl_product WHERE productName like '%$search%' ";
+                $sql = "SELECT * FROM tbl_product WHERE  productName like '%$search%' ";
         }
 
         $result = $this->db->select($sql);

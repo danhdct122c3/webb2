@@ -24,6 +24,11 @@
         //có $_FILES bởi vì có update hình ảnh  
         $updateProduct = $product->update_product($_POST,$_FILES,$id);
     }
+    function checkStatusProduct($status)
+    {
+        if($status==0) return "selected";
+        else if($status==1) return "selected";
+    }
 ?>
 <body>
     <?php include './inc/sidebar.php' ?>
@@ -153,6 +158,17 @@
                         </select>
                     </td>
                 </tr>
+                <tr>
+                    <td class="form_title">
+                        <label>Trạng thái sản phẩm</label>
+                    </td>
+                    <td>
+                        <select name="status_product" id="select">
+                            <option value="0" <?php checkStatusProduct($result_product['status_product']);?>>Hiển thị</option>
+                            <option value="1"<?php checkStatusProduct($result_product['status_product']); ?>>Ẩn</option>
+                        </select>
+                    </td>
+                </tr>
 				 <tr>
                     <td class="form_title" style="vertical-align: top; padding-top: 9px;">
                         <label>Mô tả sản phẩm</label>
@@ -180,37 +196,7 @@
                     </td>
                 </tr>
 				
-				<tr>
-                    <td class="form_title">
-                        <label>Loại sản phẩm</label>
-                    </td>
-                    <td>
-                        <select id="select" name="type">
-                            <option>Select Type</option>
-                            <?php
-                                if($result_product['type']==0) {
-                            ?>
-                                <option selected value="0">Quần áo nam</option>
-                                <option value="1">Quần áo nữ</option>
-                                <option value="2">Quần áo trẻ em</option>
-                            <?php
-                                }else if($result_product['type']==1){
-                            ?>
-                                <option value="0">Quần áo nam</option>
-                                <option selected value="1">Quần áo nữ</option>
-                                <option value="2">Quần áo trẻ em</option>
-                            <?php
-                                }else if($result_product['type']==2){
-                            ?>
-                                <option value="0">Quần áo nam</option>
-                                <option value="1">Quần áo nữ</option>
-                                <option selected value="2">Quần áo trẻ em</option>
-                            <?php
-                                }
-                            ?>
-                        </select>
-                    </td>
-                </tr>
+				
 
 				<tr>
                     <td></td>

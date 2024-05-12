@@ -13,7 +13,8 @@
 <?php
 $statistical1 = new statistical();
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
-    $getTongDoanhThuTheoNGay = $statistical1->gettongSPTheoNgay($_POST);
+    $getTongDoanhThuTheoNGay = $statistical1->gettongKHTheoNgay($_POST);
+
 }
 ?>
 
@@ -90,7 +91,94 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             <section class="recent">
                 <div class="activity-grid">
                     <div class="activity-card">
-                        <h3>Thống kê sản phẩm</h3>
+                        <h3>Thống kê khách hàng</h3>
+                        <div>
+                            <form method="POST" action="">
+                                <div class="activity-card-calendar">
+                                   
+                                        <div class="input-group mb-3">
+                                            <input id="datePickerId" value="" name="date1" type="date" data-date-inline-picker="true" />
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <input id="datePickerId" value="" name="date2" type="date" data-date-inline-picker="true" />
+                                        </div>
+                                        
+                                        <div class="input-group1 mb-3">
+                                            <input id="submit" name="submit" type="submit" value="Tìm kiếm">
+                                        </div>
+                                   
+                                </div>
+                                <div class="table-responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                               
+                                                <th>username</th>
+                                                <th>Tổng tiền</th>
+                                                <!-- <th>Số lượng bán ra</th> -->
+                                                
+                                                <th>Xem chi tiết</th>
+                                            </tr>
+                                        </thead>
+                                        <?php
+                                        if (isset($getTongDoanhThuTheoNGay) && $getTongDoanhThuTheoNGay) {
+                                            $totalquantity = 0;
+                                            $sumDT = 0;
+                                            while ($result_dtngay = $getTongDoanhThuTheoNGay->fetch_assoc()) {
+                                                $totalquantity += $result_dtngay['value_count'];
+                                                $sumDT += $result_dtngay['value_sumTT'];
+                                        ?>
+                                                <tbody>
+                                                    <tr>
+                                                        
+                                                        <td><?php echo  $result_dtngay['username'] ?></td>
+                                                        <td><?php echo number_format($result_dtngay['value_sumTT'], 0, ',', '.') . " " . "đ";   ?></td>
+                                                        <!-- <td><?php echo  $result_dtngay['value_count'] ?></td> -->
+
+
+                                        
+                                                        <td><a href="chitietdonhang.php?userId=<?php echo $result_dtngay['userId']?>&action=2&username=<?php echo $result_dtngay['username'];?> ">Xem chi tiết</a> </td>
+                                                    </tr>
+
+                                                <?php
+                                            }
+                                                ?>
+                                                <!-- <td></td>
+                                                <td></td>
+                                                <td></td> -->
+                                                <!-- <td>
+                                                    Số lượng sản phẩm bán ra : <?php echo $totalquantity ?>
+                                                </td> -->
+                                                <!-- <td colspan="4">
+                                                    Tổng tiền bán ra : <?php echo number_format($sumDT, 0, ',', '.') . " " . "đ"; ?>
+                                                </td> -->
+                                                </tbody>
+                                            <?php
+                                        } else {
+                                            ?>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="4" style="text-align:center">Không có sản phẩm nào trong mốc thời gian này</td>
+                                                    </tr>
+                                                </tbody>
+                                            <?php
+                                        }
+                                            ?>
+                                    </table>
+                                    <?php
+                                    //}
+                                    ?>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- <section class="recent">
+                <div class="activity-grid">
+                    <div class="activity-card">
+                        <h3>Thống kê sản Phẩm</h3>
                         <div>
                             <form method="POST" action="">
                                 <div class="activity-card-calendar">
@@ -168,7 +256,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> -->
         </main>
     </div>
 </body>

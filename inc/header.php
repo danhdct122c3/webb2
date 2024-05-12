@@ -3,8 +3,13 @@
         if (isset($_GET['action']) && $_GET['action']){
             header('Location:index.php');
             Session::set('user_login',false);
+           Session::get('username');
         }
     ?>
+<?php 
+include_once 'lib/session.php';
+Session::init();
+ ?>
     <ul>
         <li>
         <div class="clearfix">
@@ -13,6 +18,7 @@
                     <li class="nav-list">
                         <!-- <a href="#">NAM</a> -->
                         <a href="timkiemnangcao.php">SẢN PHẨM</a>
+                    
                         <div class="header_menu-list-in-item">
                             <div class="header_menu-list">
                                 <div class="row">   
@@ -27,7 +33,7 @@
                                                         while ($result = $get_brand->fetch_assoc()) {
                                                 ?>
                                                 <li class="col c-4">
-                                                    <a href="listProduct.php?idBrand=<?php echo $result['brandId'] ?>&type=0"><?php echo $result['brandName'] ?></a>
+                                                    <a href="listProduct.php?idBrand=<?php echo $result['brandId'] ?>"><?php echo $result['brandName'] ?></a>
                                                 </li>
                                                     <?php
                                                         }
@@ -51,7 +57,7 @@
                                                                 while ($result = $get_tpd->fetch_assoc()) {
                                                         ?>
                                                         <li class="col c-12">
-                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>&type=0"><?php echo $result['typeProductName']; ?></a>
+                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>"><?php echo $result['typeProductName']; ?></a>
                                                         </li>
                                                             <?php
                                                                 }
@@ -79,7 +85,7 @@
                                                                 while ($result = $get_tpd->fetch_assoc()) {
                                                         ?>
                                                         <li class="col c-12">
-                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>&type=0"><?php echo $result['typeProductName'] ?></a>
+                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>"><?php echo $result['typeProductName'] ?></a>
                                                         </li>
                                                             <?php
                                                                 }
@@ -98,7 +104,7 @@
                                                                 while ($result = $get_tpd->fetch_assoc()) {
                                                         ?>
                                                         <li class="col c-12">
-                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>&type=0"><?php echo $result['typeProductName'] ?></a>
+                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>"><?php echo $result['typeProductName'] ?></a>
                                                         </li>
                                                             <?php
                                                                 }
@@ -117,7 +123,7 @@
                                                                 while ($result = $get_tpd->fetch_assoc()) {
                                                         ?>
                                                         <li class="col c-12">
-                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>&type=0"><?php echo $result['typeProductName'] ?></a>
+                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>"><?php echo $result['typeProductName'] ?></a>
                                                         </li>
                                                             <?php
                                                                 }
@@ -136,7 +142,7 @@
                                                                 while ($result = $get_tpd->fetch_assoc()) {
                                                         ?>
                                                         <li class="col c-12">
-                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>&type=0"><?php echo $result['typeProductName'] ?></a>
+                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>"><?php echo $result['typeProductName'] ?></a>
                                                         </li>
                                                             <?php
                                                                 }
@@ -154,7 +160,7 @@
                                                                 while ($result = $get_tpd->fetch_assoc()) {
                                                         ?>
                                                         <li class="col c-12">
-                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>&type=0"><?php echo $result['typeProductName'] ?></a>
+                                                            <a href="listProduct.php?idType=<?php echo $result['typeProductID']; ?>"><?php echo $result['typeProductName'] ?></a>
                                                         </li>
                                                             <?php
                                                                 }
@@ -205,25 +211,39 @@
                 <li class="header__cart-wrap1">
                     <div class="header__cart">
                         <div class="header__cart-wrap">
-                                <!-- <i class="header__cart-icon ti-shopping-cart-full"></i> -->
-                                <a href="giohang.php"><i class="header__cart-icon ti-shopping-cart-full"></i></a>
-                                <span class="header_cart_quantity">
-                                    <?php 
-
-                                        $check_cart = $cat->checkCart(Session::get('user_id'));
-                                        if ($check_cart && Session::get('user_login')) {
-                                            $sum = Session::get("sum");
-                                            echo $sum;
-                                        } else if ($check_cart== false && Session::get('user_login')){
-                                            echo '0';
-                                        }
-                                       if( Session::get('user_login')==false){
-                                            echo '0';
-                                        }
+                            <?php
+                            // Kiểm tra trạng thái đăng nhập của người dùng
+                            $user_login = Session::get('user_login');
+                            
+                            if ($user_login) { // Nếu đã đăng nhập
+                                // Hiển thị nút giỏ hàng
+                                ?>
+                                <a href="giohang.php">
+                                    <i class="header__cart-icon ti-shopping-cart-full"></i>
+                                </a>
+                                <?php
+                                // Kiểm tra giỏ hàng và hiển thị số lượng sản phẩm
+                                $check_cart = $cat->checkCart(Session::get('user_id'));
+                                if ($check_cart) {
+                                    $sum = Session::get("sum");
                                     ?>
-                                </span>
+                                    <span class="header_cart_quantity"><?php echo $sum; ?></span>
+                                    <?php
+                                } else {
+                                    ?>
+                                    <span class="header_cart_quantity">0</span>
+                                    <?php
+                                }
+                            } else { // Nếu chưa đăng nhập
+                                // Hiển thị nút đăng nhập thay vì nút giỏ hàng
+                                ?>
+                                <a href="./login.php">
+                                    <i class="header__cart-icon ti-shopping-cart-full"></i>
+                                </a>
+                                <?php
+                            }
+                            ?>
                         </div>
-                    
                     </div>
                 </li>
                 <?php
@@ -236,11 +256,23 @@
                 <li  class="nav-list">
                     <div class="nav-account">
                         <!-- <div class="nav-account-img ti-headphone"></div>     -->
-                        <div class="nav-account-img ti-user"></div>
+                        <?php 
+                            $user= new user();
+                            $username=$user->show_User(Session::get('user_id'));
+                            while ($result = $username->fetch_assoc()){
+                                echo $result['username'];
+                            }?>
+                        <div class="nav-account-img ti-user">
+                        
+                            
+                        
+                      
+                        </div>
                         <ul class="nav-user_menu">
                             <li class="nav-user_menu-item">
                                 <a style="color: #ffffff;  font-size: 14px; font-weight: 600; text-decoration: none; font-family: var(--font-family-monospace);
                                 " href="account.php">Tài khoản của tôi</a>
+                                
                             </li>
                             <li class="nav-user_menu-item">
                                 <a style="color: #ffffff;  font-size: 14px; font-weight: 600; text-decoration: none; font-family: var(--font-family-monospace);
@@ -267,6 +299,7 @@
                     } 
                 ?>
             </ul>
+           
         </li>
     </ul>
 </header>

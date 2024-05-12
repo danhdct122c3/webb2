@@ -54,8 +54,10 @@ $str_br="";
 									</div>
 									<div class="khoanggia">
 										<h4 class="h4">Theo khoảng giá</h4>
-										<div style="display: flex;align-items: center;justify-content: space-around;">										
-											<input id="slider_pr" type="range" name="price" min="0" max="30000000" value="0" >
+										<div style="display: flex; align-items: center; justify-content: space-around;">                                        
+											<input id="slider_pr" type="range" name="price" min="0" max="30000000" value="0" oninput="updateSliderValue()">
+											<span id="min" style="font-family: var(--font-family-sans-serif);"></span>
+											đ -
 											<span id="max" style="font-family: var(--font-family-sans-serif);"></span>
 											đ
 										</div>
@@ -149,7 +151,7 @@ $str_br="";
 								<form action="" method="GET">
 									<div class="sort_price" style="display: flex;">										
 										<select class="select-input" name="select" onchange="location = this.value;">																			
-											<option>Lựa chọn theo giá</option>											
+																					
 												<option value="timkiemnangcao.php?select=low-high" <?php if(isset($_GET['select']) && $_GET['select'] == 'low-high'){echo "selected";} ?>>Giá từ thấp đến cao</option>																		
 												<option value="timkiemnangcao.php?select=high-low" <?php if(isset($_GET['select']) && $_GET['select'] == 'high-low'){echo "selected";} ?>>Giá từ cao đến thấp</option>
 										</select>
@@ -236,7 +238,7 @@ $str_br="";
 														if($i>6) break;
 													?>													
 														<div class="col l-4">
-															<a href="chitietsanpham.php?productId=<?php echo $result['productId'] ?>&&brandId=<?php echo $result['brandId']?>&&type=<?php echo $result['type']?>">
+															<a href="chitietsanpham.php?productId=<?php echo $result['productId'] ?>&&brandId=<?php echo $result['brandId']?>">
 															<div class="home-product-item">
 																<img src="./admin/upload/<?php echo $result['image'] ?>" alt="" class="home-product-item_img">
 																<span class="home-product-item_name"><?php echo $result['productName'] ?></span>
@@ -268,7 +270,7 @@ $str_br="";
 										while($result = $product_spr->fetch_assoc()){
 											?>
 											<div class="col l-4">
-												<a href="chitietsanpham.php?productId=<?php echo $result['productId'] ?>&&brandId=<?php echo $result['brandId']?>&&type=<?php echo $result['type']?>">
+												<a href="chitietsanpham.php?productId=<?php echo $result['productId'] ?>&&brandId=<?php echo $result['brandId']?>">
 												<div class="home-product-item">
 													<img src="./admin/upload/<?php echo $result['image'] ?>" alt="" class="home-product-item_img">
 													<span class="home-product-item_name"><?php echo $result['productName'] ?></span>
@@ -306,7 +308,10 @@ $str_br="";
 												if($product_count>6){
 													if($current_page > 1){
 														$prev_page = $current_page - 1;
-														?>										
+														?>		
+															<a href="?trang=1&price=<?=$_GET['price']?>&category=<?=$str_cate?>&brand=<?=$str_br?>&search=<?php echo $search?>">
+																<span class="ti-angle-double-left"></span>
+															</a>								
 															 <a href="?trang=<?=$prev_page?>&price=<?=$_GET['price']?>&category=<?=$str_cate?>&brand=<?=$str_br?>&search=<?php echo $search?>">
 																<span class="ti-angle-left"></span>
 															</a>	
@@ -332,10 +337,14 @@ $str_br="";
 													}
 													if($current_page < $product_button){
 														$next_page = $current_page + 1;
+														$last_page = $product_button;
 														?>										
 															<a href="?trang=<?=$next_page?>&price=<?=$_GET['price']?>&category=<?=$str_cate?>&brand=<?=$str_br?>&search=<?php echo $search?>">
 																<span class="ti-angle-right"></span>
-															</a>																						
+															</a>
+															<a href="?trang=<?=$last_page?>&price=<?=$_GET['price']?>&category=<?=$str_cate?>&brand=<?=$str_br?>&search=<?php echo $search?>">
+																<span class="ti-angle-double-right"></span>
+															</a>																					
 												<?php
 													}									
 											}
@@ -395,14 +404,18 @@ $str_br="";
 		
 		<?php include './inc/footer.php' ?>
 	</section>
-<script>
+	<script>
 		 // thanh trượt giá
 		    var slider = document.getElementById("slider_pr");
 		    var output = document.getElementById("max");
 		    output.innerHTML = slider.value;
 
 		    slider.oninput = function() {
-		        max.innerHTML = this.value;;			
+		        max.innerHTML = this.value;
+				value = parseInt(slider.value / 100000) * 100000; // Làm tròn giá trị về bội số của 100000
+        		slider.value = value; // Cập nhật giá trị của thanh trượt
+				document.getElementById("min").textContent = slider.min.toLocaleString(); // Hiển thị giá trị tối thiểu
+        		document.getElementById("max").textContent = value.toLocaleString(); // Hiển thị giá trị làm tròn		
 		    };
 		    function load_data() {
 		    var input = document.getElementById("slider_pr");

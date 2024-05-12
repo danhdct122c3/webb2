@@ -96,6 +96,14 @@
             $result = $this->db->select($query);
             return $result;
          }
+        public function getOrderHistory1($userId,$date){
+            $query = "SELECT od.* , pd.productName 
+            FROM tbl_order AS od
+            INNER JOIN tbl_product AS pd ON od.productId =pd.productId
+            WHERE userId='$userId' AND od.order_time='$date'";
+            $result = $this->db->select($query);
+            return $result;
+         }
          // update status
          public function update_Status_Order($orderId,$status,$userId){
             $query= "UPDATE tbl_order SET status = '$status' WHERE orderId IN $orderId AND userId='$userId'";
@@ -129,11 +137,23 @@
          }
 
          public function order_date($userId,$status){
-            $query = "SELECT od.order_time ,od.recieve_time
+            $query = "SELECT od.*,SUM(thanhtien) AS value_sumTT
             FROM tbl_order AS od
             INNER JOIN tbl_product AS pd ON od.productId =pd.productId
             INNER JOIN tbl_uer AS us ON od.userId =us.userId
             WHERE od.userId='$userId' AND status IN $status
+            GROUP BY od.order_time ";
+            $result = $this->db->select($query);
+            return $result;
+         }
+         public function order_date1($userId){
+            // $query = "SELECT od.order_time ,od.recieve_time
+            $query = "SELECT *
+
+            FROM tbl_order AS od
+            INNER JOIN tbl_product AS pd ON od.productId =pd.productId
+            INNER JOIN tbl_uer AS us ON od.userId =us.userId
+            WHERE od.userId='$userId'
             GROUP BY od.order_time ";
             $result = $this->db->select($query);
             return $result;

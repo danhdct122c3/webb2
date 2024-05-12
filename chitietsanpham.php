@@ -549,7 +549,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                             while ($result = $get_productRelatetionship->fetch_assoc()) {
                         ?>
                                 <div class="col l-2-4">
-                                    <a href="chitietsanpham.php?productId=<?php echo $result['productId'] ?>&&brandId=<?php echo $result['brandId'] ?>&&type=<?php echo $result['type'] ?>">
+                                    <a href="chitietsanpham.php?productId=<?php echo $result['productId'] ?>&&brandId=<?php echo $result['brandId'] ?>">
                                         <div class="home-product-item">
                                             <img src="./admin/upload/<?php echo $result['image'] ?>" alt="" class="home-product-item_img">
                                             <h4 class="home-product-item_name"><?php echo $result['productName'] ?></h4>
