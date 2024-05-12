@@ -244,13 +244,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <div class="voucher-title">
 											<span>Hình thức thanh toán</span> 
 										</div>
-                                        <select name="payment_method" id="">
-                                            <option value=1 selected>Thanh toán khi nhận hàng</option>
-                                            <option value=2 >Chuyển khoản</option>
-                                            
+                                        <select name="payment_method" id="payment_method">
+                                            <option value="1" selected>Thanh toán khi nhận hàng</option>
+                                            <option value="2">Chuyển khoản</option>
                                         </select>
-                                       
+
                                     </div>
+                                    <div class="voucher-title" id="payment_details" style="display: none; font-size:1rem">
+                                            <p>Số tài khoản Momo: 0342337766</p>
+                                            <p>Chủ tài khoản: Võ Thanh Danh</p>
+                                        </div>
+
+                                        <script>
+                                            document.getElementById("payment_method").addEventListener("change", function() {
+                                                var paymentMethod = this.value;
+                                                var paymentDetails = document.getElementById("payment_details");
+
+                                                // Hiển thị thông tin thanh toán nếu chọn chuyển khoản
+                                                if (paymentMethod === "2") {
+                                                    paymentDetails.style.display = "block";
+                                                } else {
+                                                    paymentDetails.style.display = "none";
+                                                }
+                                            });
+                                        </script>
 									<div class="cart-purchase-button">
                                     <button type="submit" name="submit" id="btn_order" onclick="return alert('Bạn đã đặt hàng thành công')">Xác nhận đặt hàng</button>
                                     </div>

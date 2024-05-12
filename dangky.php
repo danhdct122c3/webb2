@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                                 <span>Ngày sinh</span>
                                                 <span style="color: red;">*</span>
                                             </div>
-                                            <input type="date" name="date" class="auth__form-input" placeholder="Nhập ngày sinh">
+                                            <input type="date" name="ngaySinh" class="auth__form-input" placeholder="Nhập ngày sinh">
                                         </div>
                                         <div class="auth__form-group col c-6">
                                             <span class="auth__form-group-title">
@@ -98,6 +98,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                                 <span style="color: red;">*</span>
                                             </span>
                                             <input type="text" name="ward" class="auth__form-input" placeholder="Nhập Phường/Xã">
+                                            
+                                        </div>
+                                        <div class="auth__form-group col c-12">
+                                            <span class="auth__form-group-title">
+                                                <span>Tên đường</span>
+                                                <span style="color: red;">*</span>
+                                            </span>
+                                            <input type="text" name="street" class="auth__form-input" placeholder="Nhập tên đường">
                                             
                                         </div>
                                     </div>

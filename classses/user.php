@@ -42,8 +42,9 @@ class user
             $username == "" ||  $password == "" ||  $relyPassword == "" ||  $name == "" ||  $email == ""
             ||  $phone == ""||  $ngaySinh == "" || $street == "" || $ward == "" || $district == "" || $city == "" || $cauHoiBiMat == "" 
         ) {
-            $alert = "<span class='error'>Nhập đầy đủ thông tin</span>";
-            return $alert;
+            // $alert = "<span class='error'>Nhập đầy đủ thông tin</span>";
+           
+            return var_dump($username, $password, $relyPassword, $name, $email, $phone, $sex, $ngaySinh, $street, $ward, $district, $city, $cauHoiBiMat);;
         } else {
             if ($password != $relyPassword) {
                 $alert = "<span class='error'> Mật khẩu nhập lại không trùng khớp </span>";
