@@ -45,12 +45,6 @@
                         </a>
                     </li>
                     <li>
-                        <a href="thongke.php">
-                            <span class="ti-clipboard"></span>
-                            <span>Thống kê tình hình</span>
-                        </a>
-                    </li>
-                    <li>
                         <a href="thongtinkh.php">
                             <span class="ti-folder"></span>
                             <span>Thông tin khách hàng</span>

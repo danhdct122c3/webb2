@@ -223,7 +223,7 @@ function checkAddress($address,$value)
                                                             <option value="Trường Chinh" <?php checkAddress('Trường Chinh', $result_infor_user['street'] ) ?>>Trường Chinh</option>
                                                             <option value="An Dương Vương"<?php checkAddress('An Dương Vương', $result_infor_user['street'] ) ?>>An Dương Vương</option>
                                                             <option value="Âu Cơ"<?php checkAddress('Âu Cơ', $result_infor_user['street'] ) ?>>Âu Cơ</option>
-                                                            <option value="Lý Thường Kiệt">Lý Thường Kiệt</option>
+                                                            <option value="Lý Thường Kiệt"<?php checkAddress('Lý Thường Kiệt', $result_infor_user['street'] ) ?>>Lý Thường Kiệt</option>
                                                             <option value="Thành Thái"<?php checkAddress('Thành Thái', $result_infor_user['street'] ) ?>>Thành Thái</option>
                                                             <option value="Kinh Dương Vương"<?php checkAddress('Kinh Dương Vương', $result_infor_user['street'] ) ?>>Kinh Dương Vương</option>
                                                         </select>

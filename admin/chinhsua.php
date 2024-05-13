@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="assets/css/grid.css">
         <link rel="stylesheet" href="../assets/css/account.css">
         <link rel="stylesheet" href="assets/css/main.css">
+        <link rel="stylesheet" href="assets/css/dangnhap.css">
         <link rel="shortcut icon" href="assets/img/favicon_created_by_logaster.ico" type="image/x-icon">
         <link rel="stylesheet" href="https://pro.fontawesome.com/rel    eases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
         <link rel="stylesheet" href="assets/font/themify-icons/themify-icons.css">
@@ -29,6 +30,13 @@
             // For example, redirect the user to the login page
             header("Location: login.php");
             exit; // Stop further execution
+        }
+    }
+    function checkAddress($address,$value)
+    {
+        if($address == $value)
+        {
+            echo "selected";
         }
     }
     ?>
@@ -73,27 +81,39 @@
                                                     </div>
                                                     <div class="information-name">
                                                         <label>Ngày sinh</label>
-                                                        <input type="text" name="date" value="<?php echo $result_infor_user['ngaySinh'] ?>" >
+                                                        <input type="text" name="date" value="<?php echo date('d/m/Y', strtotime($result_infor_user['ngaySinh'])); ?>" >
+
                                                     </div>
                                                     <div class="information-name">
                                                         <div class="auth__form-group col c-6" style="margin-left: -11px;">
                                                             <div class="auth__form-group-title">
-                                                                <span>Số nhà và tên đường</span>
+                                                                <span>Tên đường</span>
                                                         
                                                             </div>
-                                                            <input type="text" name="street" value="<?php echo $result_infor_user['street'] ?>">
+                                                            <select name="street" id="" class="auth__form-input">
+                                                            <option value="">Chọn đường</option>
+                                                            <option value="Trường Chinh" <?php checkAddress('Trường Chinh', $result_infor_user['street'] ) ?>>Trường Chinh</option>
+                                                            <option value="An Dương Vương"<?php checkAddress('An Dương Vương', $result_infor_user['street'] ) ?>>An Dương Vương</option>
+                                                            <option value="Âu Cơ"<?php checkAddress('Âu Cơ', $result_infor_user['street'] ) ?>>Âu Cơ</option>
+                                                            <option value="Lý Thường Kiệt"<?php checkAddress('Lý Thường Kiệt', $result_infor_user['street'] ) ?>>Lý Thường Kiệt</option>
+                                                            <option value="Thành Thái"<?php checkAddress('Thành Thái', $result_infor_user['street'] ) ?>>Thành Thái</option>
+                                                            <option value="Kinh Dương Vương"<?php checkAddress('Kinh Dương Vương', $result_infor_user['street'] ) ?>>Kinh Dương Vương</option>
+                                                        </select>
                                                         </div>
                                                         <div class="auth__form-group col c-6">
-                                                            <div class="auth__form-group-title">
+                                                            <div class="information-name">
                                                                 <span>Thành phố</span>
+
                                                             </div>
-                                                            <select name="city" id="city" class="auth__form-input" style="width: 24.2rem; padding: 0.6rem; color: black;" >
-                                                            <?php
-                                                                foreach ($cities as $city) {
-                                                                    echo "<option value='{$city['name']}'>" . htmlspecialchars($city['name']) . "</option>";
-                                                                }
-                                                                ?>
+                                                            <select name="city" id="" class="auth__form-input">
+                                                                <option value="" selected disabled>Chọn tỉnh/thành phố</option>
+                                                                <option value="Hồ Chí Minh"<?php checkAddress('Hồ Chí Minh',$result_infor_user['city'] ); ?>>Hồ Chí Minh</option>
+                                                                <option value="Hà Nội"<?php checkAddress('Hà Nội', $result_infor_user['city'] ); ?>>Hà Nội</option>
+                                                                <option value="Đà Nẵng"<?php checkAddress('Đà Nẵng', $result_infor_user['city'] ); ?>>Đà Nẵng</option>
+                                                                <option value="Hải Phòng"<?php checkAddress('Hải Phòng', $result_infor_user['city'] ) ;?>>Hải Phòng</option>
+                                                                <option value="Huế" <?php checkAddress('Huế', $result_infor_user['city'] ); ?>>Huế</option>
                                                             </select>
+                                                            
                                                             
                                                         </div>
                                                     </div>
@@ -103,16 +123,31 @@
                                                             <div class="auth__form-group-title">
                                                                 <span>Quận huyện</span>
                                                             </div>
-                                                            <select name='district' id='district' class='auth__form-input' style='width: 24.2rem; padding: 0.6rem; color: black;' >"   ></select>                            
+                                                            <select name="district" id="" class="auth__form-input">
+                                                            <option value="">Chọn quận/huyện</option>
+                                                            <option value="Quận 1" <?php checkAddress('Quận 1', $result_infor_user['district'] ) ?>>Quận 1</option>
+                                                            <option value="Quận 3"<?php checkAddress('Quận 3', $result_infor_user['district'] ) ?>>Quận 3</option>
+                                                            <option value="Quận 5"<?php checkAddress('Quận 5', $result_infor_user['district'] ) ?>>Quận 5</option>
+                                                            <option value="Quận 10"<?php checkAddress('Quận 10', $result_infor_user['district'] ) ?>>Quận 10</option>
+                                                            <option value="Huyện Củ Chi"<?php checkAddress('Huyện Củ Chi', $result_infor_user['district'] ) ?>>Huyện Củ Chi</option>
+                                                            <option value="Huyện Hóc Môn"<?php checkAddress('Huyện Hóc Môn', $result_infor_user['district'] ) ?>>Huyện Hóc Môn</option>
+                                                        </select>                            
                                                         </div>
                                                         <div class="auth__form-group col c-6">
                                                             <div class="auth__form-group-title">
                                                                 <span>Phường/ Xã</span>
                                                             </div>
                                                             
-                                                            <select name='ward' id='ward' class='auth__form-input' style='width: 24.2rem; padding: 0.6rem; color: black;' >";
-                                                            
-                                                            </select>";
+                                                            <select name="ward" id="" class="auth__form-input">
+                                                            <option value="">Chọn phường/xã</option>
+                                                            <option value="Phường 1" <?php checkAddress('Phường 1', $result_infor_user['ward'] ) ?>>Phường 1</option>
+                                                            <option value="Phường 3" <?php checkAddress('Phường 3', $result_infor_user['ward'] ) ?>>Phường 3</option>
+                                                            <option value="Phường 10"<?php checkAddress('Phường 10', $result_infor_user['ward'] ) ?>>Phường 10</option>
+                                                            <option value="Phường 15"<?php checkAddress('Phường 15', $result_infor_user['ward'] ) ?>>Phường 1</option>
+                                                            <option value="Xã Tân Phú Trung"<?php checkAddress('Xã Tân Phú Trung', $result_infor_user['ward'] ) ?>>Xã Tân Phú Trung</option>
+                                                            <option value="Xã Bà Điểm"<?php checkAddress('Xã Bà Điểm', $result_infor_user['ward'] ) ?>>Xã Bà Điểm</option>
+                                                            <option value="Xã Phước Vĩnh An"<?php checkAddress('Xã Phước Vĩnh An', $result_infor_user['ward'] ) ?>>Xã Phước Vĩnh An</option>
+                                                        </select>
                                                             
                                                            
                                                             </div>
