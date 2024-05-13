@@ -70,7 +70,7 @@
                                             <th>SĐT</th>
                                             <th>Địa chỉ</th>
                                             <th>Ngày sinh</th>
-                                            <th>Giới tính</th>
+                                           
                                             <th>Hành động</th>
                                             <th>Trạng thái</th>
                                         </tr>
@@ -86,8 +86,8 @@
                                                 <td><?php echo $result['name'] ?></td>
                                                 <td><?php echo $result['sdt'] ?></td>
                                                 <td><?php echo $result['diaChi'] ?></td>
-                                                <td><?php echo $result['ngaySinh'] ?></td>
-                                                <td><?php echo $result['gioiTinh'] ?></td>
+                                                <td><?php echo date('d/m/Y', strtotime($result['ngaySinh']));?></td>
+                                               
                                                 <td>
                                                     <?php if ($result['trangThai'] == 0): ?>
                                                         <!-- Nếu trạng thái là 0 (đã bị khóa) -->

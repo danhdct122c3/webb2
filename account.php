@@ -135,22 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save'])) {
                                                     <label>Địa chỉ</label>
                                                     <input type="text" name="address" value="<?php echo $result_infor_user['diaChi'].",".$result_infor_user['street'] ?>" disabled>
                                                 </div>
-                                                <div class="information-sex">
-                                                    <label>Giới tính</label>
-                                                    <?php if ($result_infor_user['gioiTinh'] == "Nam" || $result_infor_user['gioiTinh'] == "nam") { ?>
-                                                        <input type="radio" checked="true" name="sex" id="Boy" value="Nam">
-                                                        <label for="Nam">Nam</label>
-                                                        <input type="radio" name="sex" id="Girl" value="Nữ">
-                                                        <label for="Nu">Nữ</label>
-                                                    <?php
-                                                    } else {
-                                                    ?>
-                                                        <input type="radio" name="sex" id="Boy" value="Nam">
-                                                        <label for="Nam">Nam</label>
-                                                        <input type="radio" checked="true" name="sex" id="Girl" value="Nữ">
-                                                        <label for="Nu">Nữ</label>
-                                                    <?php } ?>
-                                                </div>
+                                               
                                                 <div style="text-align: center;margin: 15px;">
                                                     <?php
                                                     if (isset($update_user)) {

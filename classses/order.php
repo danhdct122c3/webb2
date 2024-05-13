@@ -15,7 +15,7 @@
             $this->fm = new Format();
         }
         /*chèn data vào bảng tbl_order*/
-        public function insertOder($userId, $date, $payment_method,$city,$district,$ward,$address)
+        public function insertOder($userId, $date, $payment_method,$city,$district,$ward,$address,$street)
         {
             $sId = session_id();
             $query = "SELECT * FROM tbl_cart WHERE sessionId = '$sId' AND userId='$userId'";
@@ -29,8 +29,8 @@
                     $quantity = $result['quantity'];
                     $thanhtien = $result['quantity'] * $result['price'];
                     $order_time = $date;
-                    $query_order = "INSERT INTO tbl_order(productId,size,price,image,quantity,thanhtien,userId, status,order_time,recieve_time,payment,city,ward,district,address) VALUES('$productId',
-                        '$size','$price','$image','$quantity','$thanhtien','$userId','0','$order_time','0','$payment_method','$city','$district','$ward','$address')";
+                    $query_order = "INSERT INTO tbl_order(productId,size,price,image,quantity,thanhtien,userId, status,order_time,recieve_time,payment,city,ward,district,address,street) VALUES('$productId',
+                        '$size','$price','$image','$quantity','$thanhtien','$userId','0','$order_time','0','$payment_method','$city','$district','$ward','$address','$street')";
                      $insert_order = $this->db->insert($query_order);
                 }
                 return $insert_order;

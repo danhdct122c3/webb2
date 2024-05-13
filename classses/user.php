@@ -28,24 +28,24 @@ class user
         $name = mysqli_real_escape_string($this->db->link, $data["name"]);
         $email = mysqli_real_escape_string($this->db->link, $data["email"]);
         $phone = mysqli_real_escape_string($this->db->link, $data["phone"]);
-        $gender = isset($_POST['sex']) ? mysqli_real_escape_string($this->db->link, $data["sex"]) : "";
+        
         $ngaySinh = isset($_POST['ngaySinh']) ? mysqli_real_escape_string($this->db->link, $data["ngaySinh"]): "";
         $street = mysqli_real_escape_string($this->db->link, $data["street"]);
         $address = mysqli_real_escape_string($this->db->link, $data["address"]);
         $ward = isset($_POST['ward']) ? mysqli_real_escape_string($this->db->link, $data["ward"]) : "";
         $district = isset($_POST['district']) ? mysqli_real_escape_string($this->db->link, $data["district"]) : "";
         $city = isset($_POST['city']) ? mysqli_real_escape_string($this->db->link, $data["city"]) : "";
-        $cauHoiBiMat = mysqli_real_escape_string($this->db->link, $data["cauHoiBiMat"]);
+       
         $trangThai = 0;
         
     
         if (
             $username == "" ||  $password == "" ||  $relyPassword == "" ||  $name == "" ||  $email == ""
-            ||  $phone == ""||  $ngaySinh == "" || $street == "" || $ward == "" || $district == "" || $city == "" || $cauHoiBiMat == "" 
+            ||  $phone == ""||  $ngaySinh == "" || $street == "" || $ward == "" || $district == "" || $city == "" 
         ) {
             // $alert = "<span class='error'>Nhập đầy đủ thông tin</span>";
            
-            return var_dump($username, $password, $relyPassword, $name, $email, $phone, $gender, $ngaySinh, $street, $ward, $district, $city, $cauHoiBiMat);;
+            return var_dump($username, $password, $relyPassword, $name, $email, $phone, $ngaySinh, $street, $ward, $district, $city);
         } else {
             if ($password != $relyPassword) {
                 $alert = "<span class='error'> Mật khẩu nhập lại không trùng khớp </span>";
@@ -63,8 +63,8 @@ class user
                         $alert = "<span class='error'> Email của bạn đã được đăng ký </span>";
                         return $alert;
                     } else {
-                        $query = "INSERT INTO tbl_uer(name,username,userPassword,email,gioiTinh,sdt,ngaySinh,diaChi,street,ward,district,city,cauHoiBM,trangThai) VALUES('$name','$username','$password'
-                        ,'$email','$gender','$phone','$ngaySinh','$address','$street','$ward','$district','$city','$cauHoiBiMat','$trangThai')";
+                        $query = "INSERT INTO tbl_uer(name,username,userPassword,email,sdt,ngaySinh,diaChi,street,ward,district,city,trangThai) VALUES('$name','$username','$password'
+                        ,'$email','$phone','$ngaySinh','$address','$street','$ward','$district','$city','$trangThai')";
                         $result = $this->db->insert($query);
                         if ($result) {
                             $alert = "<span class='success'> Đăng ký thành công  </span>";
@@ -221,7 +221,7 @@ public function unban_user($user_Id) {
         $name = mysqli_real_escape_string($this->db->link, $data["name"]);
         $email = mysqli_real_escape_string($this->db->link, $data["email"]);
         $phone = mysqli_real_escape_string($this->db->link, $data["phone"]);
-        $sex = isset($_POST['sex']) ? mysqli_real_escape_string($this->db->link, $data["sex"]) : "";
+       
         $ngaySinh = mysqli_real_escape_string($this->db->link, $data["ngaySinh"]);
         $street = mysqli_real_escape_string($this->db->link, $data["street"]);
         $ward = isset($_POST['ward']) ? mysqli_real_escape_string($this->db->link, $data["ward"]) : "";
@@ -229,12 +229,12 @@ public function unban_user($user_Id) {
         $city = isset($_POST['city']) ? mysqli_real_escape_string($this->db->link, $data["city"]) : "";
         
 
-        if ($name == "" ||  $email == "" ||  $phone == "" ||  $sex == "" ||  $ngaySinh == "" || $street == "" || $ward == "" || $district =="" || $city == "" 
+        if ($name == "" ||  $email == "" ||  $phone == "" ||  $ngaySinh == "" || $street == "" || $ward == "" || $district =="" || $city == "" 
         ) {
             $alert = "<span class='error'>Nhập đầy đủ thông tin</span>";
             return $alert;
         } else {
-            $update_user = "UPDATE tbl_uer SET name='$name', email='$email', sdt='$phone', gioiTinh='$sex', ngaySinh='$ngaySinh', street='$street', ward='$ward', district='$district', city='$city'
+            $update_user = "UPDATE tbl_uer SET name='$name', email='$email', sdt='$phone', ngaySinh='$ngaySinh', street='$street', ward='$ward', district='$district', city='$city'
             WHERE userId='$user_Id'";
             $result_check = $this->db->update($update_user);
             if ($result_check) {

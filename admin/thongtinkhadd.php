@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
 $name = isset($_POST['name']) ? $_POST['name'] : "";
 $email = isset($_POST['email']) ? $_POST['email'] : "";
 $phone = isset($_POST['phone']) ? $_POST['phone'] : "";
-$sex = isset($_POST['sex']) ? $_POST['sex'] : "";
+
 $ngaySinh = isset($_POST['ngaySinh']) ? $_POST['ngaySinh'] : "";
 $street = isset($_POST['street']) ? $_POST['street'] : "";
 $city = isset($_POST['city']) ? $_POST['city'] : "";
@@ -87,51 +87,45 @@ $cauHoiBiMat= isset($_POST['cauHoiBiMat']) ? $_POST['cauHoiBiMat'] : "";
                                             </div>
                                             <input type="text" name="phone" class="auth__form-input" placeholder="Nhập số điện thoại"  value="<?php echo $phone; ?>">
                                         </div>
-                                        <div class="auth__form-group col c-6">
-                                            <div class="auth__form-group-title">
-                                                <span>Giới tính</span>
-                                                <span style="color: red;">*</span>
-                                            </div>
-                                            <input type="radio" name="sex" class="chooses" value="Nam"  > Nam
-                                            <input type="radio" name="sex" class="chooses" value="Nữ" > Nữ
-                                            
-                                            <!-- <input type="text" name="sex" class="auth__form-input" placeholder="Nhập giới tính"> -->
-                                        </div>
+                                       
                                         <div class="auth__form-group col c-6">
                                             <div class="auth__form-group-title">
                                                 <span>Ngày sinh</span>
                                                 <span style="color: red;">*</span>
                                             </div>
-                                            <input type="date" name="ngaySinh" class="auth__form-input" placeholder="Nhập ngày sinh"  value="<?php echo $ngaySinh; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="auth__form-group col c-6">
-                                            <div class="auth__form-group-title">
-                                                <span>Số nhà và tên đường</span>
-                                                <span style="color: red;">*</span>
-                                            </div>
-                                            <input type="text" name="street" class="auth__form-input" placeholder="Nhập số nhà và tên đường"  value="<?php echo $street; ?>">
+                                            <input type="date" name="ngaySinh" class="auth__form-input" placeholder="Nhập ngày sinh"  value="<?php  echo date('d/m/Y', strtotime($ngaysinh)); ?>">
                                         </div>
                                         <div class="auth__form-group col c-6">
                                             <div class="auth__form-group-title">
                                                 <span>Thành phố</span>
                                                 <span style="color: red;">*</span>
                                             </div>
-                                            <select name="city" id="city" class="auth__form-input">
-                                                <option value="" >Chọn thành phố</option>
-                                                
-                                     
+                                            <select name="city" id="" class="auth__form-input">
+                                                <option value="">Chọn tỉnh/thành phố</option>
+                                                <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+                                                <option value="Hà Nội">Hà Nội</option>
+                                                <option value="Đà Nẵng">Đà Nẵng</option>
+                                                <option value="Hải Phòng">Hải Phòng</option>
+                                                <option value="Huế">Huế</option>
                                             </select>
                                         </div>
+                                    </div>
+                                    <div class="row">
+                                        
+                                       
                                         <div class="auth__form-group col c-6">
                                             <div class="auth__form-group-title">
                                                 <span>Quận/ Huyện</span>
                                                 <span style="color: red;">*</span>
                                             </div>
-                                            <select name="district" id="district" class="auth__form-input">
-                                                <option value=""  >Chọn quận/huyện</option>
-
+                                            <select name="district" id="" class="auth__form-input">
+                                                <option value="">Chọn quận/huyện</option>
+                                                <option value="Quận 1">Quận 1</option>
+                                                <option value="Quận 3">Quận 3</option>
+                                                <option value="Quận 5">Quận 5</option>
+                                                <option value="Quận 10">Quận 10</option>
+                                                <option value="Huyện Củ Chi">Huyện Củ Chi</option>
+                                                <option value="Huyện Hóc Môn">Huyện Hóc Môn</option>
                                             </select>
                                         </div>
                                         <div class="auth__form-group col c-6">
@@ -139,13 +133,44 @@ $cauHoiBiMat= isset($_POST['cauHoiBiMat']) ? $_POST['cauHoiBiMat'] : "";
                                                 <span>Phường/ Xã</span>
                                                 <span style="color: red;">*</span>
                                             </div>
-                                            <select name="ward" id="ward" class="auth__form-input">
-                                                <option value=""  value="<?php echo $ward; ?>">Chọn phường/xã</option>
-                                                
+                                            <select name="ward" id="" class="auth__form-input">
+                                                <option value="">Chọn phường/xã</option>
+                                                <option value="Phường 1">Phường 1</option>
+                                                <option value="Phường 3">Phường 3</option>
+                                                <option value="Phường 10">Phường 10</option>
+                                                <option value="Phường 15">Phường 1</option>
+                                                <option value="Xã Tân Phú Trung">Xã Tân Phú Trung</option>
+                                                <option value="Xã Bà Điểm">Xã Bà Điểm</option>
+                                                <option value="Xã Phước Vĩnh An">Xã Phước Vĩnh An</option>
                                             </select>
                                         </div>
+                                        <div class="auth__form-group col c-12">
+                                            <span class="auth__form-group-title">
+                                                <span>Tên đường</span>
+                                                <span style="color: red;">*</span>
+                                            </span>
+                                            <!-- <input type="text" name="street" class="auth__form-input" placeholder="Nhập tên đường"> -->
+                                            <select name="street" id="" class="auth__form-input">
+                                                <option value="">Chọn đường</option>
+                                                <option value="Trường Chinh">Trường Chinh</option>
+                                                <option value="An Dương Vương">An Dương Vương</option>
+                                                <option value="Âu Cơ">Âu Cơ</option>
+                                                <option value="Lý Thường Kiệt">Lý Thường Kiệt</option>
+                                                <option value="Thành Thái">Thành Thái</option>
+                                                <option value="Kinh Dương Vương">Kinh Dương Vương</option>
+                                            </select>
+                                            
+                                        </div>
                                     </div>
-
+                                    <div class="row">
+                                        <div class="auth__form-group col c-12">
+                                            <div class="auth__form-group-title">
+                                                <span>Địa chỉ</span>
+                                                <span style="color: red;">*</span>
+                                            </div>
+                                            <textarea name="address" id="" cols="10" rows="10"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -173,16 +198,7 @@ $cauHoiBiMat= isset($_POST['cauHoiBiMat']) ? $_POST['cauHoiBiMat'] : "";
                                     </div>
                                     <input type="password" name="relyPassword" class="auth__form-input" placeholder="Nhập lại mật khẩu"  value="<?php echo $relyPassword; ?>">
                                 </div>
-                                <div class="auth__form-group col c-12 ">
-                                    <select class="auth__form-input" id="select" name="category"  value="<?php echo $category; ?>">
-                                        <option>Lựa chọn câu hỏi</option>
-                                        <option>Bạn thích ai nhất ?</option>
-                                        <option>Bố bạn tên gì?</option>
-                                        <option>Số tài khoản bạn là bao nhiêu?</option>
-                                        <option>Bạn thích ăn món gì?</option>
-                                    </select>
-                                    <input type="password" name="cauHoiBiMat" class="auth__form-input" placeholder="Trả lời câu hỏi bí mật"  value="<?php echo $cauHoiBiMat; ?>">
-                                </div>
+                                
                             </div>
                             <div class="baoloi">
                                 <?php

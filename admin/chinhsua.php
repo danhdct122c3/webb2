@@ -1,4 +1,4 @@
-    <?php
+<?php
     
     include '.././classses/user.php';
     $user = new user();
@@ -105,7 +105,7 @@
                                                                 <span>Thành phố</span>
 
                                                             </div>
-                                                            <select name="city" id="" class="auth__form-input">
+                                                            <select name="city" id="" class="auth__form-input" style="margin-top:-0.1rem;">
                                                                 <option value="" selected disabled>Chọn tỉnh/thành phố</option>
                                                                 <option value="Hồ Chí Minh"<?php checkAddress('Hồ Chí Minh',$result_infor_user['city'] ); ?>>Hồ Chí Minh</option>
                                                                 <option value="Hà Nội"<?php checkAddress('Hà Nội', $result_infor_user['city'] ); ?>>Hà Nội</option>
@@ -119,7 +119,7 @@
                                                     </div>
                                                     
                                                     <div class="information-name">
-                                                        <div class="auth__form-group col c-6">
+                                                        <div class="auth__form-group col c-6" style="margin-left:-0.7rem;">
                                                             <div class="auth__form-group-title">
                                                                 <span>Quận huyện</span>
                                                             </div>
@@ -147,27 +147,16 @@
                                                             <option value="Xã Tân Phú Trung"<?php checkAddress('Xã Tân Phú Trung', $result_infor_user['ward'] ) ?>>Xã Tân Phú Trung</option>
                                                             <option value="Xã Bà Điểm"<?php checkAddress('Xã Bà Điểm', $result_infor_user['ward'] ) ?>>Xã Bà Điểm</option>
                                                             <option value="Xã Phước Vĩnh An"<?php checkAddress('Xã Phước Vĩnh An', $result_infor_user['ward'] ) ?>>Xã Phước Vĩnh An</option>
-                                                        </select>
-                                                            
-                                                           
+                                                        </select>                                                                                                                       
                                                             </div>
                                                     </div>
-                                                    <div class="information-sex">
-                                                        <label>Giới tính</label>
-                                                        <?php if ($result_infor_user['gioiTinh'] == "Nam" || $result_infor_user['gioiTinh'] == "nam") { ?>
-                                                            <input type="radio" checked="true" name="sex" id="Boy" value="Nam">
-                                                            <label for="Nam">Nam</label>
-                                                            <input type="radio" name="sex" id="Girl" value="Nữ">
-                                                            <label for="Nu">Nữ</label>
-                                                        <?php
-                                                        } else {
-                                                        ?>
-                                                            <input type="radio" name="sex" id="Boy" value="Nam">
-                                                            <label for="Nam">Nam</label>
-                                                            <input type="radio" checked="true" name="sex" id="Girl" value="Nữ">
-                                                            <label for="Nu">Nữ</label>
-                                                        <?php } ?>
+                                                    <div class="auth__form-group col c-6" style="margin-left:-0.7rem;">
+                                                            <div class="auth__form-group-title">
+                                                                <span>Số nhà</span>
+                                                            </div>
+                                                            <input type="text" style="width:71.5rem;height: 2.5rem;border: 1px solid #E7E8E9;border-radius: 4px;">
                                                     </div>
+                                                    
                                                         <div style="text-align: center;margin: 15px;">
                                                             <?php
                                                             if (isset($update_user)) {

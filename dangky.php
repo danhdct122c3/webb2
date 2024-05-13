@@ -59,15 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                             </div>
                                             <input type="text" name="phone" class="auth__form-input" placeholder="Nhập số điện thoại">
                                         </div>
-                                        <div class="auth__form-group col c-6">
-                                            <div class="auth__form-group-title">
-                                                <span>Giới tính</span>
-                                                <span style="color: red;">*</span>
-                                            </div>
-                                            <input type="text" name="sex" class="auth__form-input" placeholder="Nhập giới tính">
-                                            
-                                            <!-- <input type="text" name="sex" class="auth__form-input" placeholder="Nhập giới tính"> -->
-                                        </div>
+                                        
                                         <div class="auth__form-group col c-6">
                                             <div class="auth__form-group-title">
                                                 <span>Ngày sinh</span>
@@ -186,16 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                     </div>
                                     <input type="password" name="relyPassword" class="auth__form-input" placeholder="Nhập lại mật khẩu">
                                 </div>
-                                <div class="auth__form-group col c-12 ">
-                                    <select class="auth__form-input" id="select" name="category">
-                                        <option>Lựa chọn câu hỏi</option>
-                                        <option>Bạn thích ai nhất ?</option>
-                                        <option>Bố bạn tên gì?</option>
-                                        <option>Số tài khoản bạn là bao nhiêu?</option>
-                                        <option>Bạn thích ăn món gì?</option>
-                                    </select>
-                                    <input type="password" name="cauHoiBiMat" class="auth__form-input" placeholder="Trả lời câu hỏi bí mật">
-                                </div>
+                                
                             </div>
                             <div class="baoloi">
                                 <?php

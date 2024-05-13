@@ -25,10 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $date=date('Y-m-d H:i:s');
     $city=$_POST['city'];
     $district=$_POST['district'];
+    $street=$_POST['street'];
     $ward=$_POST['ward'];
     $address=$_POST['address'];
     $payment_method = $_POST['payment_method'];
-    $inserOder = $order->insertOder(Session::get('user_id'),$date,$payment_method,$city,$district,$ward,$address);
+    $inserOder = $order->insertOder(Session::get('user_id'),$date,$payment_method,$city,$district,$ward,$address,$street);
     $delCart = $cat->del_Cart(Session::get('user_id'));
     header('Location:donhang.php');
     // var_dump($_POST);
@@ -357,7 +358,7 @@ function checkAddress($address,$value)
 
         // Xóa dữ liệu của các trường nhập liệu nếu chọn "Chọn địa chỉ mới"
         if (select.value === "new") {
-            table.style.display = "block";
+            // table.style.display = "block";
             var inputs = table.getElementsByTagName("input");
             for (var i = 0; i < inputs.length; i++) {
                 inputs[i].value = ""; // Xóa dữ liệu
@@ -367,7 +368,7 @@ function checkAddress($address,$value)
                 selects[i].selectedIndex = 0; // Đặt lại giá trị mặc định
             }
         } else if (select.value === "old") {
-            table.style.display = "none";
+            // table.style.display = "none";
         // Nếu chọn "Chọn địa chỉ người dùng", đổ dữ liệu từ mảng vào các trường input và select
         var userData = <?php echo json_encode($userData); ?>;
         if (userData.length > 0) {

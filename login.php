@@ -42,9 +42,7 @@
                                             <input type="password" name="password" class="auth__form-input" placeholder="Mật khẩu">
                                         </div>
                                     </div>
-                                    <div style="text-align: right;">
-                                        <a href="quenMatKhau.php" style="font-family: var(--font-family-monospace);color: #221f20;">Quên mật khẩu</a>
-                                    </div>
+                                    
                                     <div class="baoloi">
                                     <?php
                                         if (isset($login_user)) {
