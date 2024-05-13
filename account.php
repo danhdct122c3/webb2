@@ -133,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save'])) {
                                                 </div>
                                                 <div class="information-name">
                                                     <label>Địa chỉ</label>
-                                                    <input type="text" name="address" value="<?php echo $result_infor_user['diaChi'] ?>" disabled>
+                                                    <input type="text" name="address" value="<?php echo $result_infor_user['diaChi'].",".$result_infor_user['street'] ?>" disabled>
                                                 </div>
                                                 <div class="information-sex">
                                                     <label>Giới tính</label>

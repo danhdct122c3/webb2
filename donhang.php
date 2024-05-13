@@ -149,7 +149,7 @@ function checkStatus1($status)
                         </div>
                     </div>
                     <div class="col m-12 l-9">
-                        <h3 style="font-weight: 500;font-size: 24px;line-height: 32px;text-transform: uppercase;color: #221f20;display: flex;align-items: center;">Quản lí đơn hàng</h3>
+                        <h3 style="font-weight: 500;font-size: 24px;line-height: 32px;text-transform: uppercase;color: #221f20;display: flex;align-items: center;">Giỏ hàng</h3>
                         <ul style="display:flex;">
                             <!-- <li class="QLdonhang" onclick="<a href='donhang.php' >">Chờ xác nhận</li> -->
                             <li class="QLdonhang" style="display: none;" onclick="changeProductList('choXN',this)">Chờ xác nhận</li>
@@ -180,6 +180,8 @@ function checkStatus1($status)
                                             
                                     </table>
                             <?php
+                            $total0=0;
+                            $tongtien=0;
                             $date = $order->order_date1(Session::get('user_id'));
                             $name = $order->order_date1(Session::get('userId'));
                             if ($date == Null) {
@@ -189,33 +191,30 @@ function checkStatus1($status)
                                 while ($result_date = $date->fetch_assoc()) {
                                     $count += 1;
                                     //foreach($result_date as $date_order){
+                                        $tongtien+=$result_date['thanhtien'];
                             ?>
 
 
-                                                <?php
-                                                $getOrderHistory0 = $order->getOrderHistory1(Session::get('user_id'), $result_date['order_time']);
-
-                                                if ($getOrderHistory0) {
-                                                    $i = 0;
-                                                    $total0 = 0;
-                                                    $orderID = "";
-                                                    while ($result_OrderHistory0 = $getOrderHistory0->fetch_assoc()) {
-                                                        $total0 += $result_OrderHistory0['thanhtien'];
-                                                        $orderID .= $result_OrderHistory0['orderId'] . ",";
-                                                ?>
+                                          
                                    
                                     <table id="choXN " class="choXN table_0">
                                             <tr>
                                                 <!-- <th> <?php echo $count; ?></th> -->
                                                 <th>
-                                                                <?php echo "#". $result_OrderHistory0['orderId']; ?>
+                                                                <?php echo $count. $result_date['orderId']; ?>
                                                                 <!-- <?php echo "#". $orderID ?> -->
                                                     </th>
                                                 <th><?php echo $result_date['name'] ?></th>
                                                 <th> <?php echo $result_date['order_time']; ?></th>
                                                 
-                                                <th> <?php echo number_format($total0, 0, ',', '.') . "" . "đ"; ?></th>
-                                                <th> <?php echo  checkStatus($result_OrderHistory0['status']); ?></th>
+                                                <th> <?php if($count==1) 
+                                                    {
+                                                        echo number_format($tongtien, 0, ',', '.') . "" . "đ";
+                                                    }
+                                                    else echo number_format($total0, 0, ',', '.') . "" . "đ";
+                                                 ?>
+                                            </th>
+                                                <th> <?php echo  checkStatus($result_date['status']); ?></th>
                                                 
                                                 <th colspan="" class="toggle">Xem chi tiết</th>
                                             </tr>
@@ -238,6 +237,17 @@ function checkStatus1($status)
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                            <?php
+                                                $getOrderHistory0 = $order->getOrderHistory1(Session::get('user_id'), $result_date['order_time']);
+
+                                                if ($getOrderHistory0) {
+                                                    $i = 0;
+                                                    $total0 = 0;
+                                                    $orderID = "";
+                                                    while ($result_OrderHistory0 = $getOrderHistory0->fetch_assoc()) {
+                                                        $total0 += $result_OrderHistory0['thanhtien'];
+                                                        $orderID .= $result_OrderHistory0['orderId'] . ",";
+                                                ?>
                                                
                                                         <tr>
                                                             <td><?= ($i = $i + 1); ?></td>
@@ -281,9 +291,12 @@ function checkStatus1($status)
                                                             <td><?php echo checkPayment($result_OrderHistory0['payment']); ?></td>
                                                         </tr>
 
-
                                                         <?php
-                                                        if(checkStatus1($result_OrderHistory0['status'])==-1)
+                                                    }
+
+                                                    ?>
+                                                        <?php
+                                                        if(checkStatus1($result_date['status'])==-1)
                                                         {
                                                        ?>
                                                      <tr>
@@ -294,7 +307,7 @@ function checkStatus1($status)
 
 
                                                        <?php
-                                                        if(checkStatus1($result_OrderHistory0['status'])==0)
+                                                        if(checkStatus1($result_date['status'])==0)
                                                         {
                                                        ?>
                                                     <tr>
@@ -309,7 +322,7 @@ function checkStatus1($status)
                                                     <?php }?>
 
                                                     <?php
-                                                        if(checkStatus1($result_OrderHistory0['status'])==1)
+                                                        if(checkStatus1($result_date['status'])==1)
                                                         {
                                                        ?>
                                                   <tr>
@@ -326,7 +339,7 @@ function checkStatus1($status)
                                                         
 
                                                     <?php
-                                                        if(checkStatus1($result_OrderHistory0['status'])==2)
+                                                        if(checkStatus1($result_date['status'])==2)
                                                         {
                                                        ?>
                                                     <tr>
@@ -341,7 +354,7 @@ function checkStatus1($status)
                                                     <?php }?>
 
                                                     <?php
-                                                        if(checkStatus1($result_OrderHistory0['status'])==3 || checkStatus1($result_OrderHistory0['status'])==4 )
+                                                        if(checkStatus1($result_date['status'])==3 || checkStatus1($result_date['status'])==4 )
                                                         {
                                                        ?>
                                                      <tr>
@@ -353,10 +366,7 @@ function checkStatus1($status)
                                                     
 
 
-                                                    <?php
-                                                    }
-
-                                                    ?>
+                                                   
                                                    
                                             <?php
                                                 }

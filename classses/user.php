@@ -28,9 +28,10 @@ class user
         $name = mysqli_real_escape_string($this->db->link, $data["name"]);
         $email = mysqli_real_escape_string($this->db->link, $data["email"]);
         $phone = mysqli_real_escape_string($this->db->link, $data["phone"]);
-        $sex = isset($_POST['sex']) ? mysqli_real_escape_string($this->db->link, $data["sex"]) : "";
+        $gender = isset($_POST['sex']) ? mysqli_real_escape_string($this->db->link, $data["sex"]) : "";
         $ngaySinh = isset($_POST['ngaySinh']) ? mysqli_real_escape_string($this->db->link, $data["ngaySinh"]): "";
         $street = mysqli_real_escape_string($this->db->link, $data["street"]);
+        $address = mysqli_real_escape_string($this->db->link, $data["address"]);
         $ward = isset($_POST['ward']) ? mysqli_real_escape_string($this->db->link, $data["ward"]) : "";
         $district = isset($_POST['district']) ? mysqli_real_escape_string($this->db->link, $data["district"]) : "";
         $city = isset($_POST['city']) ? mysqli_real_escape_string($this->db->link, $data["city"]) : "";
@@ -44,7 +45,7 @@ class user
         ) {
             // $alert = "<span class='error'>Nhập đầy đủ thông tin</span>";
            
-            return var_dump($username, $password, $relyPassword, $name, $email, $phone, $sex, $ngaySinh, $street, $ward, $district, $city, $cauHoiBiMat);;
+            return var_dump($username, $password, $relyPassword, $name, $email, $phone, $gender, $ngaySinh, $street, $ward, $district, $city, $cauHoiBiMat);;
         } else {
             if ($password != $relyPassword) {
                 $alert = "<span class='error'> Mật khẩu nhập lại không trùng khớp </span>";
@@ -62,8 +63,8 @@ class user
                         $alert = "<span class='error'> Email của bạn đã được đăng ký </span>";
                         return $alert;
                     } else {
-                        $query = "INSERT INTO tbl_uer(name,username,userPassword,email,gioiTinh,sdt,ngaySinh,street,ward,district,city,cauHoiBM,trangThai) VALUES('$name','$username','$password'
-                        ,'$email','$sex','$phone','$ngaySinh','$street','$ward','$district','$city','$cauHoiBiMat','$trangThai')";
+                        $query = "INSERT INTO tbl_uer(name,username,userPassword,email,gioiTinh,sdt,ngaySinh,diaChi,street,ward,district,city,cauHoiBM,trangThai) VALUES('$name','$username','$password'
+                        ,'$email','$gender','$phone','$ngaySinh','$address','$street','$ward','$district','$city','$cauHoiBiMat','$trangThai')";
                         $result = $this->db->insert($query);
                         if ($result) {
                             $alert = "<span class='success'> Đăng ký thành công  </span>";

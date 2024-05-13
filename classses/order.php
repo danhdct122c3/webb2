@@ -148,7 +148,7 @@
          }
          public function order_date1($userId){
             // $query = "SELECT od.order_time ,od.recieve_time
-            $query = "SELECT *
+            $query = "SELECT  od.*,SUM(thanhtien) AS value_sumTT, us.*
 
             FROM tbl_order AS od
             INNER JOIN tbl_product AS pd ON od.productId =pd.productId

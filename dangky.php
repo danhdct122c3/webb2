@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                                 <span>Email</span>
                                                 <span style="color: red;">*</span>
                                             </div>
-                                            <input type="text" name="email" class="auth__form-input" placeholder="Nhập địa chỉ email">
+                                            <input type="email" name="email" class="auth__form-input" placeholder="Nhập địa chỉ email">
                                         </div>
                                         <div class="auth__form-group col c-6">
                                             <div class="auth__form-group-title">
@@ -80,7 +80,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                                 <span>Thành Phố</span>
                                                 <span style="color: red;">*</span>
                                             </span>
-                                            <input type="text" name="city" class="auth__form-input" placeholder="Nhập Tỉnh/Thành Phố">
+                                            <!-- <input type="text" name="city" class="auth__form-input" placeholder="Nhập Tỉnh/Thành Phố"> -->
+                                            <select name="city" id="" class="auth__form-input">
+                                                <option value="">Chọn tỉnh/thành phố</option>
+                                                <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+                                                <option value="Hà Nội">Hà Nội</option>
+                                                <option value="Đà Nẵng">Đà Nẵng</option>
+                                                <option value="Hải Phòng">Hải Phòng</option>
+                                                <option value="Huế">Huế</option>
+                                            </select>
+
                                         </div>
 
                                         
@@ -89,15 +98,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                                 <span>Quận/Huyện </span>
                                                 <span style="color: red;">*</span>
                                             </span>
-                                            <input type="text" name="district" class="auth__form-input" placeholder="Nhập Quận/Huyện">
-                                           
+                                            <!-- <input type="text" name="district" class="auth__form-input" placeholder="Nhập Quận/Huyện"> -->
+                                            <select name="district" id="" class="auth__form-input">
+                                                <option value="">Chọn quận/huyện</option>
+                                                <option value="Quận 1">Quận 1</option>
+                                                <option value="Quận 3">Quận 3</option>
+                                                <option value="Quận 5">Quận 5</option>
+                                                <option value="Quận 10">Quận 10</option>
+                                                <option value="Huyện Củ Chi">Huyện Củ Chi</option>
+                                                <option value="Huyện Hóc Môn">Huyện Hóc Môn</option>
+                                            </select>
                                         </div>
                                         <div class="auth__form-group col c-6">
                                             <span class="auth__form-group-title">
                                                 <span>Phường/Xã</span>
                                                 <span style="color: red;">*</span>
                                             </span>
-                                            <input type="text" name="ward" class="auth__form-input" placeholder="Nhập Phường/Xã">
+                                            <!-- <input type="text" name="ward" class="auth__form-input" placeholder="Nhập Phường/Xã"> -->
+                                            <select name="ward" id="" class="auth__form-input">
+                                                <option value="">Chọn phường/xã</option>
+                                                <option value="Phường 1">Phường 1</option>
+                                                <option value="Phường 3">Phường 3</option>
+                                                <option value="Phường 10">Phường 10</option>
+                                                <option value="Phường 15">Phường 1</option>
+                                                <option value="Xã Tân Phú Trung">Xã Tân Phú Trung</option>
+                                                <option value="Xã Bà Điểm">Xã Bà Điểm</option>
+                                                <option value="Xã Phước Vĩnh An">Xã Phước Vĩnh An</option>
+                                            </select>
                                             
                                         </div>
                                         <div class="auth__form-group col c-12">
@@ -105,7 +132,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                                 <span>Tên đường</span>
                                                 <span style="color: red;">*</span>
                                             </span>
-                                            <input type="text" name="street" class="auth__form-input" placeholder="Nhập tên đường">
+                                            <!-- <input type="text" name="street" class="auth__form-input" placeholder="Nhập tên đường"> -->
+                                            <select name="street" id="" class="auth__form-input">
+                                                <option value="">Chọn đường</option>
+                                                <option value="Trường Chinh">Trường Chinh</option>
+                                                <option value="An Dương Vương">An Dương Vương</option>
+                                                <option value="Âu Cơ">Âu Cơ</option>
+                                                <option value="Lý Thường Kiệt">Lý Thường Kiệt</option>
+                                                <option value="Thành Thái">Thành Thái</option>
+                                                <option value="Kinh Dương Vương">Kinh Dương Vương</option>
+                                            </select>
                                             
                                         </div>
                                     </div>
@@ -119,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                                 <span>Địa chỉ</span>
                                                 <span style="color: red;">*</span>
                                             </div>
-                                            <textarea name="address" id="" cols="30" rows="10"></textarea>
+                                            <textarea name="address" id="" cols="10" rows="10"></textarea>
                                         </div>
                                     </div>
 

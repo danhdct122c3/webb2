@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="assets/css/productCart.css">
     <link rel="stylesheet" href="assets/css/base.css">
     <link rel="stylesheet" href="assets/css/thanhtoan.css">
+    <link rel="stylesheet" href="assets/css/dangnhap.css">
+
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/font/themify-icons/themify-icons.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,7 +35,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         echo "Form chưa được submit.";
     }
+    
 }
+function checkAddress($address,$value)
+    {
+        if($address == $value)
+        {
+            echo "selected";
+        }
+    }
 ?>
 <body>
     <div class="grid">
@@ -141,11 +151,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 
                                 <div class="col l-12" style="margin: 20px 0;">
                                     <h3 style="padding: 10px;font-family: var(--font-family-sans-serif);">Địa chỉ giao hàng</h3>
-                                    <div style="border:none; border-radius: 32px 0px 0px;">
+                                    <label for="chooseAddress">Chọn địa chỉ:</label>
+                                    <select id="chooseAddress" onchange="toggleAddress()">
+                                        <option value="old">Chọn địa chỉ người dùng</option>
+                                        <option value="new">Chọn địa chỉ mới</option>
+                                    </select>
+                                   
+                                    <div id="addressTable" style="border:none; border-radius: 32px 0px 0px;">
                                     <?php
+                                        $userData = []; // Khởi tạo mảng để lưu dữ liệu người dùng
                                         $userId = Session::get('user_id');
                                         $infor_user = $user->show_User($userId);
                                         while ($result_infor_user = $infor_user->fetch_assoc()) {
+                                            $userData[] = $result_infor_user;
                                         ?>
                                      
                                           <table>
@@ -153,39 +171,79 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                     <tr style="line-height:50px;">
                                                         <td>Thành Phố: </td>
                                                         <td >
-                                                           <input type="text" name="city" value="<?php echo $result_infor_user['city'] ?>"> 
-                                                          
+                                                           <!-- <input type="text" name="city" value="<?php echo $result_infor_user['city'] ?>">  -->
+                                                           <select name="city" id="" class="auth__form-input">
+                                                                <option value="" selected disabled>Chọn tỉnh/thành phố</option>
+                                                                <option value="Hồ Chí Minh"<?php checkAddress('Hồ Chí Minh',$result_infor_user['city'] ); ?>>Hồ Chí Minh</option>
+                                                                <option value="Hà Nội"<?php checkAddress('Hà Nội', $result_infor_user['city'] ); ?>>Hà Nội</option>
+                                                                <option value="Đà Nẵng"<?php checkAddress('Đà Nẵng', $result_infor_user['city'] ); ?>>Đà Nẵng</option>
+                                                                <option value="Hải Phòng"<?php checkAddress('Hải Phòng', $result_infor_user['city'] ) ;?>>Hải Phòng</option>
+                                                                <option value="Huế" <?php checkAddress('Huế', $result_infor_user['city'] ); ?>>Huế</option>
+                                                            </select>
+
                                                         </td>
                                                     </tr>
                                                     <tr style="line-height:50px;">
                                                         <td>Quận/Huyện </td>
                                                         <td >
-                                                        <input type="text" name="district" value="<?php echo $result_infor_user['district'] ?>">
-                                                        
+                                                        <!-- <input type="text" name="district" value="<?php echo $result_infor_user['district'] ?>"> -->
+                                                        <select name="district" id="" class="auth__form-input">
+                                                            <option value="">Chọn quận/huyện</option>
+                                                            <option value="Quận 1" <?php checkAddress('Quận 1', $result_infor_user['district'] ) ?>>Quận 1</option>
+                                                            <option value="Quận 3"<?php checkAddress('Quận 3', $result_infor_user['district'] ) ?>>Quận 3</option>
+                                                            <option value="Quận 5"<?php checkAddress('Quận 5', $result_infor_user['district'] ) ?>>Quận 5</option>
+                                                            <option value="Quận 10"<?php checkAddress('Quận 10', $result_infor_user['district'] ) ?>>Quận 10</option>
+                                                            <option value="Huyện Củ Chi"<?php checkAddress('Huyện Củ Chi', $result_infor_user['district'] ) ?>>Huyện Củ Chi</option>
+                                                            <option value="Huyện Hóc Môn"<?php checkAddress('Huyện Hóc Môn', $result_infor_user['district'] ) ?>>Huyện Hóc Môn</option>
+                                                        </select>
                                                         </td>
                                                     </tr>
                                                     <tr style="line-height:50px;">
                                                         <td>Phường/Xã</td>
                                                         <td>
-                                                        <input type="text" name="ward" value="<?php echo $result_infor_user['ward'] ?>"> 
-                                                      
+                                                        <!-- <input type="text" name="ward" value="<?php echo $result_infor_user['ward'] ?>">  -->
+                                                        <select name="ward" id="" class="auth__form-input">
+                                                            <option value="">Chọn phường/xã</option>
+                                                            <option value="Phường 1" <?php checkAddress('Phường 1', $result_infor_user['ward'] ) ?>>Phường 1</option>
+                                                            <option value="Phường 3" <?php checkAddress('Phường 3', $result_infor_user['ward'] ) ?>>Phường 3</option>
+                                                            <option value="Phường 10"<?php checkAddress('Phường 10', $result_infor_user['ward'] ) ?>>Phường 10</option>
+                                                            <option value="Phường 15"<?php checkAddress('Phường 15', $result_infor_user['ward'] ) ?>>Phường 1</option>
+                                                            <option value="Xã Tân Phú Trung"<?php checkAddress('Xã Tân Phú Trung', $result_infor_user['ward'] ) ?>>Xã Tân Phú Trung</option>
+                                                            <option value="Xã Bà Điểm"<?php checkAddress('Xã Bà Điểm', $result_infor_user['ward'] ) ?>>Xã Bà Điểm</option>
+                                                            <option value="Xã Phước Vĩnh An"<?php checkAddress('Xã Phước Vĩnh An', $result_infor_user['ward'] ) ?>>Xã Phước Vĩnh An</option>
+                                                        </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="line-height:50px;">
+                                                        <td>Đường</td>
+                                                        <td>
+                                                        <!-- <input type="text" name="ward" value="<?php echo $result_infor_user['street'] ?>">  -->
+                                                        <select name="street" id="" class="auth__form-input">
+                                                            <option value="">Chọn đường</option>
+                                                            <option value="Trường Chinh" <?php checkAddress('Trường Chinh', $result_infor_user['street'] ) ?>>Trường Chinh</option>
+                                                            <option value="An Dương Vương"<?php checkAddress('An Dương Vương', $result_infor_user['street'] ) ?>>An Dương Vương</option>
+                                                            <option value="Âu Cơ"<?php checkAddress('Âu Cơ', $result_infor_user['street'] ) ?>>Âu Cơ</option>
+                                                            <option value="Lý Thường Kiệt">Lý Thường Kiệt</option>
+                                                            <option value="Thành Thái"<?php checkAddress('Thành Thái', $result_infor_user['street'] ) ?>>Thành Thái</option>
+                                                            <option value="Kinh Dương Vương"<?php checkAddress('Kinh Dương Vương', $result_infor_user['street'] ) ?>>Kinh Dương Vương</option>
+                                                        </select>
                                                         </td>
                                                     </tr>
                                                     <tr style="line-height:50px;">
                                                         <td>Địa Chỉ: </td>
                                                         <td >
                                                             <!-- <input type="text" name="address" value="đã nhận dữ liệu"> -->
-                                                            <input type="text"name="address"  value="<?php echo $result_infor_user['diaChi'] ?>">
+                                                            <input type="text"name="address"  class="auth__form-input" value="<?php echo $result_infor_user['diaChi'] ?>">
                                                             
                                                            
                                                         </td>
                                                     </tr>
-                                                    <tr style="line-height:50px;">
+                                                    <!-- <tr style="line-height:50px;">
                                                         <td  style="cursor:pointer;" colspan="3">
                                                         
                                                        <span class="cart-purchase-button"  ><button type="button" id="updateAddressBtn">Cập nhật địa chỉ giao hàng</button>
                                                         </td>
-                                                    </tr>
+                                                    </tr> -->
                                                 </tbody>
                                                 </tbody>
                                             <?php
@@ -291,7 +349,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         document.getElementById('updateAddressBtn').addEventListener('click', function() {
             alert('Cập nhật địa chỉ thành công');
         });
-    </script>                           
+    </script>    
+<script>
+    function toggleAddress() {
+        var select = document.getElementById("chooseAddress");
+        var table = document.getElementById("addressTable");
+
+        // Xóa dữ liệu của các trường nhập liệu nếu chọn "Chọn địa chỉ mới"
+        if (select.value === "new") {
+            table.style.display = "block";
+            var inputs = table.getElementsByTagName("input");
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].value = ""; // Xóa dữ liệu
+            }
+            var selects = table.getElementsByTagName("select");
+            for (var i = 0; i < selects.length; i++) {
+                selects[i].selectedIndex = 0; // Đặt lại giá trị mặc định
+            }
+        } else if (select.value === "old") {
+            table.style.display = "none";
+        // Nếu chọn "Chọn địa chỉ người dùng", đổ dữ liệu từ mảng vào các trường input và select
+        var userData = <?php echo json_encode($userData); ?>;
+        if (userData.length > 0) {
+            var user = userData[0]; // Giả sử chỉ lấy dữ liệu của user đầu tiên trong mảng
+            document.getElementsByName("city")[0].value = user.city;
+            document.getElementsByName("district")[0].value = user.district;
+            document.getElementsByName("ward")[0].value = user.ward;
+            document.getElementsByName("street")[0].value = user.street;
+            document.getElementsByName("address")[0].value = user.diaChi;
+
+            // Tiếp tục cho các trường khác...
+        }
+    }
+    }
+</script>                      
 </body>
 
 </html>
